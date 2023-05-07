@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="560.0" prefWidth="360.0" style="-fx-background-color: FFF8ED;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jordanarocha.Controllers.LoginController">
+   <children>
+      <Label alignment="CENTER" layoutX="64.0" layoutY="79.0" style="-fx-font-family: Kumbh Sans; -fx-font-weight: lighter;" text="Jordana Rocha" AnchorPane.leftAnchor="64.0" AnchorPane.rightAnchor="63.0" AnchorPane.topAnchor="79.0">
+         <font>
+            <Font name="Arial" size="36.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="loginField" focusColor="#095742" labelFloat="true" layoutX="60.0" layoutY="240.0" onKeyPressed="#LogarComEnter" prefWidth="240.0" promptText="Login" text="admin" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="240.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXTextField>
+      <JFXPasswordField fx:id="passwordField" focusColor="#095742" labelFloat="true" layoutX="60.0" layoutY="296.0" onKeyPressed="#LogarComEnter" prefWidth="240.0" promptText="Senha" text="admin" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="296.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXPasswordField>
+      <JFXButton layoutX="136.0" layoutY="348.0" onAction="#CadastroVendedor" text="Novo Usuário" textAlignment="CENTER" textFill="#095742" underline="true" AnchorPane.leftAnchor="136.0" AnchorPane.rightAnchor="135.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="120.0" layoutY="446.0" onAction="#Login" prefWidth="120.0" style="-fx-background-color: #095742; -fx-background-radius: 2;" text="Entrar" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="446.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <Label fx:id="labelErrado" layoutX="109.0" layoutY="398.0" text="Login ou Senha incorretos." textFill="RED" visible="false" AnchorPane.leftAnchor="109.0" AnchorPane.rightAnchor="109.0" AnchorPane.topAnchor="398.0" />
+   </children>
+</AnchorPane>

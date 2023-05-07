@@ -1,0 +1,73 @@
+.fieldzim {
+    -fx-text-fill: #FFFFFF;
+    -fx-prompt-text-fill: #FFFFFF;
+}
+
+.add .label {
+    -fx-padding: 0;
+    -fx-pref-width: 0;
+    -fx-pref-height: 0;
+    -fx-opacity: 0;
+    -fx-background-color: transparent;
+}
+
+.auto-complete-popup .list-view {
+    -fx-min-width: 500px;
+    -fx-max-width: 500px;
+}
+
+.table-view .column-header > .label {
+    -fx-text-fill:  #FFFFFF;
+    -fx-background-color: #095742;
+    -fx-border-width: 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: #095742;
+    -fx-border-width: 0;
+
+}
+
+.table-view {
+    -fx-border-width: 0 1 1 1;
+    -fx-border-color: none;
+}
+
+.tabelaVendedores .column-header > .label {
+    -fx-text-fill:  #FFFFFF;
+
+}
+
+.table-view:focused .table-row-cell:selected {
+    -fx-text-fill:  white;
+    -fx-background-color: #095742;
+}
+
+.table-view .table-row-cell {
+    -fx-text-fill:  #095742;
+    -fx-background-color: white;
+    -fx-border-width: 0 0 1 0;
+    -fx-alignment: CENTER;
+}
+
+#colunaCelularCliente, #colunaEmailCliente, #colunaEnderecoCliente, #colunaCPFCliente, #colunaNomeCliente {
+    -fx-alignment: CENTER;
+}
+
+.table-view .scroll-bar:horizontal > .increment-button,
+.table-view .scroll-bar:horizontal > .decrement-button,
+.table-view .scroll-bar:horizontal > .increment-arrow,
+.table-view .scroll-bar:horizontal > .decrement-arrow,
+.table-view .scroll-bar:horizontal > .thumb {
+    -fx-opacity: 0;
+    -fx-pref-height: 0;
+    -fx-min-height: 0;
+    -fx-max-height: 0;
+}
+
+.botaoExcluirCliente .text{
+    visibility: hidden;
+    -fx-padding: 0;
+    -fx-margin:0;
+    display: none;
+}

@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDialog?>
+<?import com.jfoenix.controls.JFXDialogLayout?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: FFF8ED;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jordanarocha.Controllers.PrincipalController">
+    <children>
+      <Pane fx:id="paneFundoDaModal" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: #33333338;" visible="false" />
+      <StackPane fx:id="stackPaneConfirmaExcluir" layoutX="650.0" layoutY="300.0" prefHeight="204.0" prefWidth="350.0" style="-fx-border-radius: 5; -fx-background-radius: 5;" />
+      <StackPane fx:id="stackAtualizaCliente" layoutX="-225.0" layoutY="-1028.0" prefHeight="800.0" prefWidth="480.0" visible="false" AnchorPane.leftAnchor="-1" AnchorPane.topAnchor="-1">
+         <children>
+            <Pane prefHeight="800.0" prefWidth="480.0" style="-fx-background-color: #095742;">
+               <children>
+                  <JFXButton contentDisplay="CENTER" layoutX="424.0" layoutY="8.0" onAction="#fecharTelaEditorDeCliente" prefHeight="44.0" prefWidth="43.0" ripplerFill="#095742" style="-fx-background-radius: 0;" styleClass="botaoExcluirCliente" stylesheets="@../Styles/style.css" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="24.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagens/fechar.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXTextField fx:id="atualizaClienteNomeField" focusColor="WHITE" labelFloat="true" layoutX="51.0" layoutY="114.0" prefHeight="30.0" prefWidth="378.0" promptText="Nome" styleClass="fieldzim" stylesheets="@../Styles/style.css" unFocusColor="WHITE" />
+                  <JFXTextField fx:id="atualizaClienteCPFField" focusColor="WHITE" labelFloat="true" layoutX="51.0" layoutY="194.0" prefHeight="30.0" prefWidth="378.0" promptText="CPF" styleClass="fieldzim" stylesheets="@../Styles/style.css" unFocusColor="WHITE" />
+                  <JFXTextField fx:id="atualizaClienteCelularField" focusColor="WHITE" labelFloat="true" layoutX="51.0" layoutY="274.0" prefHeight="30.0" prefWidth="378.0" promptText="Celular" styleClass="fieldzim" stylesheets="@../Styles/style.css" unFocusColor="WHITE" />
+                  <JFXTextField fx:id="atualizaClienteEmailField" focusColor="WHITE" labelFloat="true" layoutX="51.0" layoutY="354.0" prefHeight="30.0" prefWidth="378.0" promptText="Email" styleClass="fieldzim" stylesheets="@../Styles/style.css" unFocusColor="WHITE" />
+                  <JFXTextField fx:id="atualizaClienteEnderecoField" focusColor="WHITE" labelFloat="true" layoutX="51.0" layoutY="434.0" prefHeight="30.0" prefWidth="378.0" promptText="Endereço" styleClass="fieldzim" stylesheets="@../Styles/style.css" unFocusColor="WHITE" />
+                  <JFXTextArea fx:id="atualizaClienteObservacaoField" focusColor="WHITE" labelFloat="true" layoutX="26.0" layoutY="536.0" prefHeight="116.0" prefWidth="428.0" promptText="Observação" styleClass="fieldzim" stylesheets="@../Styles/style.css" unFocusColor="WHITE" />
+                  <JFXButton buttonType="RAISED" layoutX="111.0" layoutY="718.0" prefHeight="25.0" prefWidth="258.0" ripplerFill="WHITE" style="-fx-background-color: FFFFFF20;" text="Confirmar" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <ImageView fitHeight="64.0" fitWidth="64.0" layoutX="208.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagens/bonequito.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
+      </StackPane>
+        <Pane prefHeight="900.0" prefWidth="280.0" style="-fx-background-color: #00000010;">
+            <children>
+                <ImageView fitHeight="94.0" fitWidth="200.0" layoutX="92.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../Imagens/profile-user.png" />
+                    </image>
+                </ImageView>
+                <Label alignment="CENTER" ellipsisString="" layoutX="86.0" layoutY="149.0" text="Dennis Bozzi">
+                    <font>
+                        <Font name="Segoe UI Light" size="20.0" />
+                    </font>
+                </Label>
+                <Label alignment="CENTER" contentDisplay="CENTER" ellipsisString="" layoutX="99.0" layoutY="172.0" text="vendedor" textAlignment="CENTER">
+                    <font>
+                        <Font name="Segoe UI Light" size="20.0" />
+                    </font>
+                </Label>
+                <JFXButton alignment="TOP_LEFT" layoutX="9.0" layoutY="260.0" onAction="#TrocaPaneComeco" prefWidth="260.0" ripplerFill="#095742" text="   Início">
+                    <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Imagens/solar_home-angle-bold.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <font>
+                        <Font name="Segoe UI Symbol" size="18.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </JFXButton>
+                <JFXButton alignment="TOP_LEFT" layoutX="9.0" layoutY="360.0" onAction="#TrocaPaneVender" prefWidth="260.0" ripplerFill="#095742" text="   Venda">
+                    <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Imagens/ic_baseline-sell.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <font>
+                        <Font name="Segoe UI Symbol" size="18.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </JFXButton>
+                <JFXButton alignment="TOP_LEFT" layoutX="9.0" layoutY="460.0" onAction="#TrocaPaneRelatorios" prefWidth="260.0" ripplerFill="#095742" text="   Consultar">
+                    <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Imagens/mdi_drive-document.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <font>
+                        <Font name="Segoe UI Symbol" size="18.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </JFXButton>
+                <JFXButton fx:id="botaoCadastrar" alignment="TOP_LEFT" layoutX="9.0" layoutY="560.0" onAction="#TrocaPaneAdicionar" prefWidth="260.0" ripplerFill="#095742" text="   Cadastrar">
+                    <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Imagens/material-symbols_add-box.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <font>
+                        <Font name="Segoe UI Symbol" size="18.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </JFXButton>
+                <JFXButton alignment="TOP_LEFT" layoutX="9.0" layoutY="813.0" onAction="#sairPrincipal" prefWidth="260.0" ripplerFill="#095742" text="   Sair">
+                    <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Imagens/gg_log-off.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <font>
+                        <Font name="Segoe UI Symbol" size="18.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </JFXButton>
+                <Pane fx:id="paneSubMenu" layoutX="29.0" layoutY="623.0" prefHeight="168.0" prefWidth="221.0" style="-fx-background-color: #00000010;">
+                    <children>
+                        <JFXButton alignment="TOP_LEFT" layoutX="11.0" layoutY="14.0" onAction="#TrocaPaneAdicionarProduto" prefWidth="200.0" ripplerFill="#095742" text="Produto">
+                            <graphic>
+                                <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../Imagens/dashicons_products.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                            <font>
+                                <Font name="Segoe UI Symbol" size="18.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </JFXButton>
+                        <JFXButton alignment="TOP_LEFT" layoutX="11.0" layoutY="62.0" onAction="#TrocaPaneAdicionarCliente" prefWidth="200.0" ripplerFill="#095742" text="Cliente">
+                            <graphic>
+                                <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../Imagens/material-symbols_person.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                            <font>
+                                <Font name="Segoe UI Symbol" size="18.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                            <contextMenu>
+                                <ContextMenu>
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" text="Oi" />
+                                    </items>
+                                </ContextMenu>
+                            </contextMenu>
+                        </JFXButton>
+                  <JFXButton alignment="TOP_LEFT" layoutX="11.0" layoutY="110.0" onAction="#TrocaPaneAdicionarAtributo" prefWidth="200.0" ripplerFill="#095742" text="Atributo">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagens/jewel.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Segoe UI Symbol" size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <contextMenu>
+                        <ContextMenu>
+                           <items>
+                              <MenuItem mnemonicParsing="false" text="Oi" />
+                           </items>
+                        </ContextMenu>
+                     </contextMenu>
+                  </JFXButton>
+                    </children>
+                </Pane>
+                <Pane fx:id="markComeco" layoutX="271.0" layoutY="262.0" prefHeight="40.0" prefWidth="8.0" style="-fx-background-color: #095742; -fx-background-radius: 3;" />
+                <Pane fx:id="markVender" layoutX="271.0" layoutY="362.0" prefHeight="40.0" prefWidth="8.0" style="-fx-background-color: #095742; -fx-background-radius: 3;" visible="false" />
+                <Pane fx:id="markRelatorios" layoutX="271.0" layoutY="462.0" prefHeight="40.0" prefWidth="8.0" style="-fx-background-color: #095742; -fx-background-radius: 3;" visible="false" />
+                <Pane fx:id="markCadastrar" layoutX="271.0" layoutY="562.0" prefHeight="40.0" prefWidth="8.0" style="-fx-background-color: #095742; -fx-background-radius: 3;" visible="false" />
+            </children>
+        </Pane>
+        <Pane fx:id="paneComeco" layoutX="280.0" prefHeight="900.0" prefWidth="1320.0" visible="false">
+            <children>
+                <Label alignment="CENTER" ellipsisString="" layoutX="549.0" layoutY="107.0" text="Bem Vindo">
+                    <font>
+                        <Font name="Segoe UI Light" size="48.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+        <Pane fx:id="paneVender" layoutX="280.0" prefHeight="900.0" prefWidth="1320.0" stylesheets="@../Styles/style.css" visible="false">
+            <children>
+                <Label alignment="CENTER" ellipsisString="" layoutX="587.0" layoutY="70.0" text="Vender">
+                    <font>
+                        <Font name="Segoe UI Light" size="48.0" />
+                    </font>
+                </Label>
+                <JFXTextField fx:id="autocompleteNome" focusColor="#095742" labelFloat="true" layoutX="387.0" layoutY="221.0" prefHeight="27.0" prefWidth="378.0" promptText="Nome" style="-fx-padding: 0;">
+                    <font>
+                        <Font name="Segoe UI Light" size="18.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </JFXTextField>
+                <JFXTextField fx:id="autocompleteCPF" focusColor="#095742" labelFloat="true" layoutX="793.0" layoutY="221.0" prefHeight="27.0" prefWidth="141.0" promptText="CPF" style="-fx-padding: 0;">
+                    <font>
+                        <Font name="Segoe UI Light" size="18.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </JFXTextField>
+                <JFXButton layoutX="534.0" layoutY="843.0" prefHeight="30.0" prefWidth="252.0" style="-fx-background-color: #095742;" text="Confirmar" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </JFXButton>
+                <ListView fx:id="listaVendas" layoutX="187.0" layoutY="324.0" prefHeight="360.0" prefWidth="960.0" />
+                <Pane layoutX="187.0" layoutY="659.0" prefHeight="25.0" prefWidth="960.0" style="-fx-background-color: #09574235;" />
+                <JFXButton contentDisplay="TOP" layoutX="634.0" layoutY="733.0" style="-fx-background-color: #095742;" text="Adicionar" textFill="WHITE">
+                    <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Imagens/add-to-cart.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </JFXButton>
+            </children>
+        </Pane>
+        <Pane fx:id="paneRelatorios" layoutX="280.0" prefHeight="900.0" prefWidth="1320.0">
+            <children>
+                <Label alignment="CENTER" ellipsisString="" layoutX="565.0" layoutY="54.0" text="Consultar">
+                    <font>
+                        <Font name="Segoe UI Light" size="48.0" />
+                    </font>
+                </Label>
+            <Label fx:id="labelProdutos" alignment="CENTER" ellipsisString="" layoutX="576.0" layoutY="131.0" prefHeight="53.0" prefWidth="169.0" style="-fx-text-fill: #095742; -fx-background-radius: 5;" text="Produtos" visible="false">
+               <font>
+                  <Font name="Segoe UI Light" size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelClientes" alignment="CENTER" ellipsisString="" layoutX="576.0" layoutY="131.0" prefHeight="53.0" prefWidth="169.0" style="-fx-text-fill: #095742; -fx-background-radius: 5;" text="Clientes">
+               <font>
+                  <Font name="Segoe UI Light" size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelVendas" alignment="CENTER" ellipsisString="" layoutX="577.0" layoutY="131.0" prefHeight="53.0" prefWidth="169.0" style="-fx-text-fill: #095742; -fx-background-radius: 5;" text="Vendas" visible="false">
+               <font>
+                  <Font name="Segoe UI Light" size="36.0" />
+               </font>
+            </Label>
+            <TableView fx:id="tabelaProdutos" layoutX="61.0" layoutY="236.0" maxWidth="1200.0" prefHeight="564.0" prefWidth="1200.0" style="-fx-background-color: #00000010;" stylesheets="@../Styles/style.css" visible="false">
+              <columns>
+                <TableColumn prefWidth="240.0" text="Foto" />
+                <TableColumn minWidth="0.0" prefWidth="240.0" text="Joia" />
+                  <TableColumn minWidth="0.0" prefWidth="240.0" text="Tipo" />
+                  <TableColumn minWidth="0.0" prefWidth="240.0" text="Liga" />
+                  <TableColumn minWidth="0.0" prefWidth="240.0" text="Valor" />
+              </columns>
+            </TableView>
+            <TableView fx:id="tabelaClientes" layoutX="61.0" layoutY="236.0" maxWidth="1200.0" onMouseClicked="#clicarParaAbrirEditorDeCliente" prefHeight="564.0" prefWidth="1200.0" style="-fx-background-color: #00000010; -fx-border-radius: 5;" stylesheets="@../Styles/style.css">
+               <columns>
+                  <TableColumn fx:id="colunaNomeCliente" maxWidth="240.0" prefWidth="240.0" resizable="false" style="-fx-border-width: 0;" text="Nome" />
+                  <TableColumn fx:id="colunaCPFCliente" maxWidth="240.0" minWidth="0.0" prefWidth="240.0" resizable="false" style="-fx-border-width: 0;" text="CPF" />
+                  <TableColumn fx:id="colunaEnderecoCliente" maxWidth="240.0" minWidth="0.0" prefWidth="240.0" resizable="false" style="-fx-border-width: 0;" text="Endereço" />
+                  <TableColumn fx:id="colunaEmailCliente" maxWidth="240.0" minWidth="0.0" prefWidth="240.0" resizable="false" style="-fx-border-width: 0;" text="E-Mail" />
+                  <TableColumn fx:id="colunaCelularCliente" maxWidth="240.0" minWidth="0.0" prefWidth="240.0" resizable="false" style="-fx-border-width: 0;" text="Celular" />
+               </columns>
+            </TableView>
+            <TableView fx:id="tabelaVendas" layoutX="61.0" layoutY="236.0" maxWidth="1200.0" prefHeight="564.0" prefWidth="1200.0" style="-fx-background-color: #00000010;" stylesheets="@../Styles/style.css" visible="false">
+               <columns>
+                  <TableColumn prefWidth="300.0" text="Comprador" />
+                  <TableColumn minWidth="0.0" prefWidth="300.0" text="Vendedor" />
+                  <TableColumn minWidth="0.0" prefWidth="300.0" text="Data" />
+                  <TableColumn minWidth="0.0" prefWidth="300.0" text="Valor Total" />
+               </columns>
+            </TableView>
+            <JFXButton layoutX="222.0" layoutY="211.0" onAction="#mostraTabelaProdutos" prefHeight="25.0" prefWidth="258.0" style="-fx-background-color: #095742; -fx-background-radius: 5 5 0 0;" text="Produtos" textFill="WHITE">
+               <font>
+                  <Font name="SansSerif Regular" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton layoutX="532.0" layoutY="211.0" onAction="#mostraTabelaClientes" prefHeight="25.0" prefWidth="258.0" style="-fx-background-color: #095742; -fx-background-radius: 5 5 0 0;" text="Clientes" textFill="WHITE">
+               <font>
+                  <Font name="SansSerif Regular" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton layoutX="842.0" layoutY="211.0" onAction="#mostraTabelaRelatorios" prefHeight="25.0" prefWidth="258.0" style="-fx-background-color: #095742; -fx-background-radius: 5 5 0 0;" text="Vendas" textFill="WHITE">
+               <font>
+                  <Font name="SansSerif Regular" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="botaoExcluirCliente" contentDisplay="CENTER" layoutX="1007.0" layoutY="817.0" onAction="#abrirConfirmExcluirCliente" prefHeight="44.0" prefWidth="64.0" ripplerFill="#095742" style="-fx-background-radius: 0;" styleClass="botaoExcluirCliente" stylesheets="@../Styles/style.css" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="48.0" fitWidth="71.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagens/delete.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXTextField fx:id="campoPesquisa" focusColor="#095742" layoutX="472.0" layoutY="830.0" prefHeight="25.0" prefWidth="378.0" promptText="Pesquisar">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXTextField>
+            </children>
+        </Pane>
+        <Pane fx:id="paneCadastrarProduto" layoutX="280.0" prefHeight="900.0" prefWidth="1320.0" visible="false">
+            <children>
+                <Label alignment="CENTER" ellipsisString="" layoutX="517.0" layoutY="91.0" text="Novo Produto">
+                    <font>
+                        <Font name="Segoe UI Light" size="48.0" />
+                    </font>
+                </Label>
+                <JFXTextField fx:id="fieldNovoNomeProduto" focusColor="#095742" labelFloat="true" layoutX="286.0" layoutY="260.0" prefHeight="25.0" prefWidth="320.0" promptText="Nome" />
+                <JFXTextField fx:id="fieldNovoValor" focusColor="#095742" labelFloat="true" layoutX="697.0" layoutY="260.0" prefHeight="25.0" prefWidth="320.0" promptText="Valor" />
+                <JFXComboBox fx:id="comboAcessorio" focusColor="#095742" labelFloat="true" layoutX="286.0" layoutY="340.0" prefHeight="25.0" prefWidth="320.0" promptText="Acessório">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXComboBox>
+                <JFXComboBox fx:id="comboLiga" focusColor="#095742" labelFloat="true" layoutX="697.0" layoutY="340.0" prefHeight="25.0" prefWidth="320.0" promptText="Liga">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXComboBox>
+                <JFXComboBox fx:id="comboPedra" focusColor="#095742" labelFloat="true" layoutX="286.0" layoutY="420.0" prefHeight="25.0" prefWidth="320.0" promptText="Pedra">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXComboBox>
+                <JFXComboBox fx:id="comboTamanho" focusColor="#095742" labelFloat="true" layoutX="697.0" layoutY="420.0" prefHeight="25.0" prefWidth="320.0" promptText="Tamanho">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXComboBox>
+                <JFXButton fx:id="anexarImagemButton" alignment="CENTER" contentDisplay="TOP" layoutX="550.0" layoutY="539.0" onAction="#anexarImagem" style="-fx-background-color: #095742;" text="Adicionar Imagem" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+               <graphic>
+                      <ImageView fx:id="imagemTemporaria" fitHeight="150.0" fitWidth="200.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                              <Image url="@../Imagens/default-image.jpg" />
+                          </image>
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport>
+                      </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+                </JFXButton>
+                <JFXButton layoutX="534.0" layoutY="774.0" prefHeight="30.0" prefWidth="252.0" style="-fx-background-color: #095742;" text="Confirmar" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+                </JFXButton>
+            </children>
+        </Pane>
+        <Pane fx:id="paneCadastrarCliente" layoutX="280.0" prefHeight="900.0" prefWidth="1320.0" visible="false">
+            <children>
+                <Label alignment="CENTER" ellipsisString="" layoutX="527.0" layoutY="91.0" text="Novo Cliente">
+                    <font>
+                        <Font name="Segoe UI Light" size="48.0" />
+                    </font>
+                </Label>
+                <JFXTextField fx:id="cadastroClienteNome" focusColor="#095742" labelFloat="true" layoutX="286.0" layoutY="260.0" prefHeight="25.0" prefWidth="320.0" promptText="Nome" />
+                <JFXTextField fx:id="cadastroClienteCPF" focusColor="#095742" labelFloat="true" layoutX="697.0" layoutY="260.0" prefHeight="25.0" prefWidth="320.0" promptText="CPF" />
+                <JFXTextField fx:id="cadastroClienteEndereco" focusColor="#095742" labelFloat="true" layoutX="285.0" layoutY="340.0" prefHeight="25.0" prefWidth="733.0" promptText="Endereço" />
+                <JFXTextField fx:id="cadastroClienteCelular" focusColor="#095742" labelFloat="true" layoutX="286.0" layoutY="420.0" prefHeight="25.0" prefWidth="320.0" promptText="Celular" />
+                <JFXTextField fx:id="cadastroClienteEmail" focusColor="#095742" labelFloat="true" layoutX="697.0" layoutY="420.0" prefHeight="25.0" prefWidth="320.0" promptText="Email" />
+                <JFXTextArea fx:id="cadastroClienteObservacao" focusColor="#095742" labelFloat="true" layoutX="365.0" layoutY="546.0" prefHeight="132.0" prefWidth="574.0" promptText="Observação" />
+                <JFXButton layoutX="534.0" layoutY="774.0" onAction="#adicionarCliente" prefHeight="30.0" prefWidth="252.0" style="-fx-background-color: #095742;" text="Confirmar" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </JFXButton>
+            <Label fx:id="cpfJaExiste" alignment="CENTER" ellipsisString="" layoutX="762.0" layoutY="295.0" prefHeight="20.0" prefWidth="190.0" text="O CPF já existe" textFill="RED" visible="false">
+               <font>
+                  <Font name="Segoe UI Semibold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="cpfEInvalido" alignment="CENTER" ellipsisString="" layoutX="762.0" layoutY="295.0" prefHeight="20.0" prefWidth="190.0" text="O CPF é inválido" textFill="RED" visible="false">
+               <font>
+                  <Font name="Segoe UI Semibold" size="14.0" />
+               </font>
+            </Label>
+            </children>
+        </Pane>
+      <Pane fx:id="paneCadastrarAtributo" layoutX="280.0" prefHeight="900.0" prefWidth="1320.0" visible="false">
+         <children>
+            <JFXTextField focusColor="#095742" labelFloat="true" layoutX="510.0" layoutY="313.0" prefHeight="25.0" prefWidth="300.0" promptText="Novo Atributo">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXTextField>
+            <Label alignment="CENTER" ellipsisString="" layoutX="518.0" layoutY="91.0" text="Novo Atributo">
+               <font>
+                  <Font name="Segoe UI Light" size="48.0" />
+               </font>
+            </Label>
+            <JFXRadioButton layoutX="613.0" layoutY="457.0" text="Pedra">
+               <toggleGroup>
+                  <ToggleGroup fx:id="atributos" />
+               </toggleGroup>
+            </JFXRadioButton>
+            <JFXRadioButton layoutX="613.0" layoutY="377.0" selected="true" text="Acessório" toggleGroup="$atributos" />
+            <JFXRadioButton layoutX="613.0" layoutY="417.0" text="Liga" toggleGroup="$atributos" />
+            <JFXRadioButton layoutX="613.0" layoutY="497.0" text="Tamanho" toggleGroup="$atributos" />
+            <JFXButton layoutX="534.0" layoutY="558.0" prefHeight="30.0" prefWidth="252.0" style="-fx-background-color: #095742;" text="Confirmar" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+         </children>
+      </Pane>
+        <ImageView fitHeight="150.0" fitWidth="100.0" layoutX="1472.0" layoutY="779.0" opacity="0.43" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../Imagens/flower.png" />
+            </image>
+        </ImageView>
+      <JFXDialog fx:id="dialogExcluir" layoutX="611.0" layoutY="-449.0" prefHeight="250.0" prefWidth="350.0" style="-fx-background-radius: 5; -fx-border-radius: 5;" visible="false">
+         <children>
+            <JFXDialogLayout fx:id="dialogConfirmaExluir" alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="250.0" prefWidth="350.0" style="-fx-background-color: #095742;">
+               <children>
+                  <Pane prefHeight="250.0" prefWidth="350.0">
+                     <children>
+                        <JFXButton layoutX="214.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#fecharConfirmExcluirCliente" ripplerFill="RED" style="-fx-background-color: #FFFFFF40;" text="Não" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXButton>
+                        <JFXButton fx:id="excluirCliente" layoutX="79.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#excluirCliente" ripplerFill="WHITE" style="-fx-background-color: #FFFFFF50;" text="Sim" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXButton>
+                     </children>
+                  </Pane>
+               </children>
+            </JFXDialogLayout>
+         </children>
+      </JFXDialog>
+      <Label fx:id="headerConfirmaExcluir" layoutX="509.0" layoutY="-231.0" text="Excluir" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="bodyConfirmaExcluir" layoutX="389.0" layoutY="-161.0" text="Tem certeza que deseja excluir o cliente?" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+    </children>
+</AnchorPane>
