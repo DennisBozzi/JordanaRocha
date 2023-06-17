@@ -25,7 +25,6 @@
 .table-view .column-header {
     -fx-background-color: #095742;
     -fx-border-width: 0;
-
 }
 
 .table-view {
@@ -33,9 +32,9 @@
     -fx-border-color: none;
 }
 
-.tabelaVendedores .column-header > .label {
-    -fx-text-fill:  #FFFFFF;
 
+#colunaIDAtributo, #colunaNomeAtributo, #colunaValorAtributo {
+    -fx-alignment: CENTER;
 }
 
 .table-view:focused .table-row-cell:selected {
@@ -46,7 +45,6 @@
 .table-view .table-row-cell {
     -fx-text-fill:  #095742;
     -fx-background-color: white;
-    -fx-border-width: 0 0 1 0;
     -fx-alignment: CENTER;
 }
 
@@ -70,4 +68,61 @@
     -fx-padding: 0;
     -fx-margin:0;
     display: none;
+}
+
+#colunaIDVendedor, #colunaNomeVendedor, #colunaCPFVendedor, #colunaCelularVendedor, #colunaStatusVendedor{
+    -fx-alignment: CENTER;
+}
+
+#colunaIdProdutos, #colunaFotoProdutos, #colunaJoiaProdutos, #colunaAcessorioProdutos, #colunaLigaProdutos, #colunaValorProdutos {
+    -fx-alignment: CENTER;
+}
+
+#colunaStatusVendedor {
+    -fx-font-weight:bold;
+}
+
+.tabelaVendedores {
+    -fx-border-width: 1;
+    -fx-border-color: none;
+    -fx-background-color: transparent;
+}
+
+.tabelaVendedores .column-header > .label {
+    -fx-text-fill:  #FFFFFF;
+    -fx-border-color: #FFFFFF;
+    -fx-border-width: 0;
+}
+
+.tabelaVendedores .table-cell {
+    -fx-text-fill: #FFFFFF;
+}
+
+.tabelaVendedores .table-row-cell{
+    -fx-background-color: #095742;
+}
+
+.tabelaVendedores:focused .table-row-cell:selected .table-cell {
+    -fx-text-fill: #FFFFFF;
+}
+
+.tabelaVendedores:focused .table-row-cell:selected{
+    -fx-background-color: #FFFFFF20;
+}
+
+.comboboxEdicaoProduto {
+    -jfx-cell-fill: #FFFFFF;
+    -fx-text-fill: #FFFFFF;
+}
+
+.comboboxEdicaoProduto .list-cell {
+    -fx-text-fill:white;
+}
+
+.comboboxEdicaoProduto .list-view .list-cell {
+    -fx-background-color: #095742;
+}
+
+.comboboxEdicaoProduto .list-view .list-cell:hover {
+    -fx-background-color: #09574280;
 }

@@ -29,11 +29,27 @@ public class Validador {
             return false;
         }
 
+        // Verifica se todos os dígitos são iguais
+        if (cpf.matches("(\\d)\\1{10}")) {
+            return false;
+        }
+
+        // Verifica CPFs inválidos de "11111111111" até "99999999999"
+        for (int i = 0; i <= 9; i++) {
+            StringBuilder repeticao = new StringBuilder();
+            for (int j = 0; j < 11; j++) {
+                repeticao.append(i);
+            }
+            if (cpf.equals(repeticao.toString())) {
+                return false;
+            }
+        }
+
         Integer digito1 = calcularDigito(cpf.substring(0, 9), pesoCPF);
         Integer digito2 = calcularDigito(cpf.substring(0, 9) + digito1, pesoCPF);
         return cpf.equals(cpf.substring(0, 9) + digito1.toString() + digito2.toString());
-    }    
-    
+    }
+
     // Método para conferir se o CPF já está cadastrado no banco de dados
     public static boolean isCpfCadastrado(String cpf) {
         JoalheriaDAO dao = new JoalheriaDAO();

@@ -9,6 +9,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import jordanarocha.App;
+import jordanarocha.Models.VendedorDAO;
+import jordanarocha.Tabelas.Vendedor;
 
 public class LoginController implements Initializable {
 
@@ -21,18 +23,31 @@ public class LoginController implements Initializable {
     @FXML
     private Label labelErrado;
 
+    String loginAdmin = "admin";
+    String senhaAdmin = "admin";
+
+    //Instanciando VendedorDAO
+    VendedorDAO vendedorDAO = new VendedorDAO();
+
+    Vendedor vendedor;
+
     //Método de login
     @FXML
     private void Login() {
 
+        vendedor = vendedorDAO.verificaCredenciais(loginField.getText(), passwordField.getText());
+        
         //Conferindo login e senha
-        if (loginField.getText().equals("admin") && passwordField.getText().equals("admin")) {
+        if ((vendedor != null && vendedor.getStatusVendedor() == 1) || (loginField.getText().equals(loginAdmin) && (passwordField.getText().equals(senhaAdmin)))) {
+
+            // Os dados estão corretos
             App.trocaTela("principal");
             labelErrado.setVisible(false);
             loginField.clear();
             passwordField.clear();
-        } //Se estiver errado mostra mensagem de erro
-        else {
+        } else {
+
+            // Dados incorretos
             labelErrado.setVisible(true);
         }
 

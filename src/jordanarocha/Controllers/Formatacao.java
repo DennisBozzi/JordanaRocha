@@ -3,7 +3,9 @@ package jordanarocha.Controllers;
 import com.jfoenix.controls.JFXTextField;
 import java.util.Arrays;
 import java.util.List;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.input.KeyCode;
+import javafx.util.converter.IntegerStringConverter;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
@@ -107,7 +109,7 @@ public class Formatacao {
     }
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    //Formata o celular enquanto digita - TextField
+    //Formata o RG enquanto digita - TextField
     public void formataRGEnquantoDigita(JFXTextField textField) {
 
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -155,4 +157,17 @@ public class Formatacao {
         return String.format("%s.%s.%s-%s", value.substring(0, 3), value.substring(3, 6), value.substring(6, 9), value.substring(9, 11));
     }
 
+    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //Faz com que o textField aceite apenas números, com no máximo 20 algarísmos
+    public static void soNumerosTextField(JFXTextField textField) {
+        TextFormatter<Integer> textFormatter = new TextFormatter<>(new IntegerStringConverter(), null,
+                change -> {
+                    String newText = change.getControlNewText();
+                    if (newText.matches("-?\\d{0,20}")) { // Permite até 20 dígitos numéricos
+                        return change;
+                    }
+                    return null;
+                });
+        textField.setTextFormatter(textFormatter);
+    }
 }

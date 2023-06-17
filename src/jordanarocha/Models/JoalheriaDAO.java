@@ -89,20 +89,20 @@ public class JoalheriaDAO {
         return false;
     }
 
-    //Método para ler os clientes - Nele ele coloca os clientes em uma observable list e depois coloco eles em uma tabela
+    //Método para ler os clientes (READ)
     public ObservableList<Cliente> getClientes() {
         ObservableList<Cliente> clientes = FXCollections.observableArrayList();
 
-        try (Connection connection = getConnection(); Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery("SELECT nome_cliente, cpf_cliente, email_cliente, endereco_cliente, telefone_cliente, observacao_cliente FROM clientes")) {
+        try (Connection connection = getConnection(); Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery("SELECT nome_cliente, cpf_cliente, email_cliente, telefone_cliente, endereco_cliente, observacao_cliente FROM clientes")) {
 
             while (rs.next()) {
                 String nome = rs.getString("nome_cliente");
                 String cpf = rs.getString("cpf_cliente");
                 String email = rs.getString("email_cliente");
-                String endereco = rs.getString("endereco_cliente");
                 String celular = rs.getString("telefone_cliente");
+                String endereco = rs.getString("endereco_cliente");
                 String observacao = rs.getString("observacao_cliente");
-                clientes.add(new Cliente(nome, cpf, email, endereco, celular, observacao));
+                clientes.add(new Cliente(nome, cpf, email, celular, endereco, observacao));
             }
 
         } catch (SQLException ex) {
@@ -112,6 +112,34 @@ public class JoalheriaDAO {
         return clientes;
     }
 
+    //Método que pega o cliente pelo CPF
+    public Cliente getClienteByCPF(String cpf) {
+        Cliente cliente = null;
+        String query = "SELECT * FROM clientes WHERE cpf_cliente = ?";
+
+        try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, cpf);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                String nome = resultSet.getString("nome_cliente");
+                String endereco = resultSet.getString("endereco_cliente");
+                String celular = resultSet.getString("telefone_cliente");
+                String email = resultSet.getString("email_cliente");
+                String observacao = resultSet.getString("observacao_cliente");
+
+                cliente = new Cliente(nome, cpf, email, celular, endereco, observacao);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cliente;
+    }
+
+    
     //Método para Excluir Cliente, passando o CPF como parametro.
     public void excluirCliente(String cpf) {
         String sql = "DELETE FROM clientes WHERE cpf_cliente = ?";
@@ -121,6 +149,28 @@ public class JoalheriaDAO {
             stmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Erro ao excluir cliente: " + e.getMessage());
+        }
+    }
+
+    // Método para atualizar cliente
+    public void updateCliente(Cliente cliente) {
+        String sql = "UPDATE clientes SET nome_cliente = ?, email_cliente = ?, telefone_cliente = ?, endereco_cliente = ?, observacao_cliente = ? WHERE cpf_cliente = ?";
+
+        try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, cliente.getNome());
+            preparedStatement.setString(2, cliente.getEmail());
+            preparedStatement.setString(3, cliente.getCelular());
+            preparedStatement.setString(4, cliente.getEndereco());
+            preparedStatement.setString(5, cliente.getObservacao());
+            preparedStatement.setString(6, cliente.getCpf());
+
+            preparedStatement.executeUpdate();
+
+            System.out.println("O cliente " + cliente.getNome() + " foi atualizado com sucesso!");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
