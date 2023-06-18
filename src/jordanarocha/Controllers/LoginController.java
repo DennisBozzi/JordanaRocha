@@ -23,28 +23,45 @@ public class LoginController implements Initializable {
     @FXML
     private Label labelErrado;
 
-    String loginAdmin = "admin";
-    String senhaAdmin = "admin";
-
     //Instanciando VendedorDAO
     VendedorDAO vendedorDAO = new VendedorDAO();
 
-    Vendedor vendedor;
+    //Administrador
+    Vendedor administrador = vendedorDAO.getVendedorByID(1);
+
+    String loginAdmin = administrador.getUsuarioVendedor();
+    String senhaAdmin = administrador.getSenhaVendedor();
+
+    //Vendedor Logado
+    private Vendedor vendedorLogado;
+
+    //Método que atribui o Vendedor Logado
+    public void setVendedorLogado(Vendedor vendedor) {
+        this.vendedorLogado = vendedor;
+        // Agora você pode usar vendedorLogado neste controlador
+    }
 
     //Método de login
     @FXML
     private void Login() {
 
-        vendedor = vendedorDAO.verificaCredenciais(loginField.getText(), passwordField.getText());
-        
+        vendedorLogado = vendedorDAO.verificaCredenciais(loginField.getText(), passwordField.getText());
+
         //Conferindo login e senha
-        if ((vendedor != null && vendedor.getStatusVendedor() == 1) || (loginField.getText().equals(loginAdmin) && (passwordField.getText().equals(senhaAdmin)))) {
+        if ((vendedorLogado != null && vendedorLogado.getStatusVendedor() == 1)
+                || (loginField.getText().equals(loginAdmin) && (passwordField.getText().equals(senhaAdmin)))) {
 
             // Os dados estão corretos
-            App.trocaTela("principal");
             labelErrado.setVisible(false);
             loginField.clear();
             passwordField.clear();
+
+            vendedorLogado = vendedorDAO.getVendedorByID(vendedorLogado.getIdVendedor());
+
+            System.out.println(vendedorLogado.toString());
+
+            App.trocaTela("principal", vendedorLogado);
+
         } else {
 
             // Dados incorretos
@@ -55,7 +72,7 @@ public class LoginController implements Initializable {
 
     @FXML
     private void CadastroVendedor(ActionEvent event) {
-        App.trocaTela("cadastro");
+        App.trocaTela("cadastro", vendedorLogado);
     }
 
     public void LogarComEnter(KeyEvent event) {

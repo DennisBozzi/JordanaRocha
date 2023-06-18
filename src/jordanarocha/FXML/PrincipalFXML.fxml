@@ -11,7 +11,6 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -21,10 +20,149 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: FFF8ED;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jordanarocha.Controllers.PrincipalController">
     <children>
+      <Pane fx:id="modalFormaDePagamento" layoutX="635.0" layoutY="200.0" prefHeight="494.0" prefWidth="350.0" style="-fx-background-color: #095742; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: FFFFFF;" visible="false">
+         <children>
+            <JFXButton contentDisplay="CENTER" layoutX="300.0" layoutY="6.0" onAction="#fechaOpcoesDePagamento" prefHeight="44.0" prefWidth="43.0" ripplerFill="#095742" style="-fx-background-radius: 0;" styleClass="botaoExcluirCliente" stylesheets="@../Styles/style.css" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="24.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagens/fechar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <Label layoutX="74.0" layoutY="83.0" text="Forma de Pagamento" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="92.0" layoutY="113.0" text="selecione o pagamento" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <JFXRadioButton fx:id="btnDinheiro" layoutX="98.0" layoutY="200.0" prefHeight="28.0" prefWidth="153.0" selected="true" style="-fx-background-color: #00000010; -fx-background-radius: 5;" text="Dinheiro" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <selectedColor>
+                  <Color red="1.0" green="1.0" blue="1.0" />
+               </selectedColor>
+               <unSelectedColor>
+                  <Color red="1.0" green="1.0" blue="1.0" opacity="0.5" />
+               </unSelectedColor>
+               <toggleGroup>
+                  <ToggleGroup fx:id="pagamento" />
+               </toggleGroup>
+            </JFXRadioButton>
+            <JFXRadioButton fx:id="btnDebito" layoutX="98.0" layoutY="243.0" prefHeight="28.0" prefWidth="153.0" style="-fx-background-color: #00000010; -fx-background-radius: 5;" text="Débito" textFill="WHITE" toggleGroup="$pagamento">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <selectedColor>
+                  <Color red="1.0" green="1.0" blue="1.0" />
+               </selectedColor>
+               <unSelectedColor>
+                  <Color red="1.0" green="1.0" blue="1.0" opacity="0.5" />
+               </unSelectedColor>
+            </JFXRadioButton>
+            <JFXRadioButton fx:id="btnCredito" layoutX="98.0" layoutY="289.0" prefHeight="28.0" prefWidth="153.0" style="-fx-background-color: #00000010; -fx-background-radius: 5;" text="Cŕedito" textFill="WHITE" toggleGroup="$pagamento">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <selectedColor>
+                  <Color red="1.0" green="1.0" blue="1.0" />
+               </selectedColor>
+               <unSelectedColor>
+                  <Color red="1.0" green="1.0" blue="1.0" opacity="0.5" />
+               </unSelectedColor>
+            </JFXRadioButton>
+            <JFXRadioButton fx:id="btnPix" layoutX="98.0" layoutY="336.0" prefHeight="28.0" prefWidth="153.0" style="-fx-background-color: #00000010; -fx-background-radius: 5;" text="Pix" textFill="WHITE" toggleGroup="$pagamento">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <selectedColor>
+                  <Color red="1.0" green="1.0" blue="1.0" />
+               </selectedColor>
+               <unSelectedColor>
+                  <Color red="1.0" green="1.0" blue="1.0" opacity="0.5" />
+               </unSelectedColor>
+            </JFXRadioButton>
+            <ImageView fitHeight="64.0" fitWidth="64.0" layoutX="143.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Imagens/money%20(1).png" />
+               </image>
+            </ImageView>
+            <JFXButton layoutX="55.0" layoutY="435.0" onAction="#adicionarVenda" prefHeight="30.0" prefWidth="239.0" style="-fx-background-color: #FFFFFF25; -fx-padding: 0;" text="Confirmar" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+         </children>
+      </Pane>
+      <Pane fx:id="paneListaProdutos" layoutX="460.0" layoutY="60.0" prefHeight="800.0" prefWidth="700.0" style="-fx-background-color: #095742;" visible="false">
+         <children>
+            <Label layoutX="265.0" layoutY="82.0" text="Escolha um produto" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="64.0" fitWidth="64.0" layoutX="318.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Imagens/caixinha.png" />
+               </image>
+            </ImageView>
+            <JFXButton contentDisplay="CENTER" layoutX="650.0" layoutY="6.0" onAction="#fechaListaProdutos" prefHeight="44.0" prefWidth="43.0" ripplerFill="#095742" style="-fx-background-radius: 0;" styleClass="botaoExcluirCliente" stylesheets="@../Styles/style.css" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="24.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagens/fechar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" layoutX="221.0" layoutY="738.0" onAction="#escolheProduto" prefHeight="25.0" prefWidth="258.0" ripplerFill="WHITE" style="-fx-background-color: FFFFFF20;" text="Confirmar" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <TableView fx:id="tabelaEscolhaProduto" layoutX="2.0" layoutY="137.0" maxWidth="1200.0" onMouseClicked="#clicarParaAbrirEditorDeProduto" prefHeight="564.0" prefWidth="696.0" style="-fx-background-color: #095742;" stylesheets="@../Styles/style.css">
+               <columns>
+                  <TableColumn fx:id="colunaEscolheId" prefWidth="46.0" style="-fx-border-width: 0;" text="#" />
+                  <TableColumn fx:id="colunaEscolheFoto" prefWidth="216.0" style="-fx-border-width: 0;" text="Foto" />
+                  <TableColumn fx:id="colunaEscolheNome" minWidth="0.0" prefWidth="216.0" style="-fx-border-width: 0;" text="Nome" />
+                  <TableColumn fx:id="colunaEscolheValor" minWidth="0.0" prefWidth="216.0" style="-fx-border-width: 0;" text="Valor" />
+               </columns>
+            </TableView>
+            <Label fx:id="produtoEscolhido" layoutX="280.0" layoutY="711.0" text="Produto já escolhido!" textFill="WHITE" visible="false">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="nenhumProduto" layoutX="257.0" layoutY="711.0" text="Nenhum produto escolhido!" textFill="WHITE" visible="false">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
       <Pane fx:id="modalEditaProduto" layoutX="450.0" layoutY="50.0" prefHeight="800.0" prefWidth="700.0" style="-fx-background-color: #095742;" visible="false">
          <children>
             <Label layoutX="44.0" layoutY="28.0" text="Edição produto" textFill="WHITE">
@@ -182,12 +320,12 @@
       </StackPane>
       <Pane fx:id="modalConfirmaAlterarCliente" layoutX="271.0" layoutY="200.0" prefHeight="250.0" prefWidth="350.0" style="-fx-background-color: #095742; -fx-background-radius: 5; -fx-border-radius: 5;" visible="false">
          <children>
-            <JFXButton layoutX="76.0" layoutY="166.0" onAction="#confirmaAlteracaoCliente" text="Sim" textFill="WHITE">
+            <JFXButton layoutX="76.0" layoutY="166.0" onAction="#confirmaAlteracaoCliente" style="-fx-background-color: ffffff30;" text="Sim" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </JFXButton>
-            <JFXButton layoutX="212.0" layoutY="166.0" onAction="#fechaConfirmaAlteracaoCliente" text="Não" textFill="WHITE">
+            <JFXButton layoutX="212.0" layoutY="166.0" onAction="#fechaConfirmaAlteracaoCliente" style="-fx-background-color: ffffff30;" text="Não" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -206,17 +344,17 @@
       </Pane>
         <Pane prefHeight="900.0" prefWidth="280.0" style="-fx-background-color: #00000010;">
             <children>
-                <ImageView fitHeight="94.0" fitWidth="200.0" layoutX="92.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="imagemVendedorLogado" fitHeight="94.0" fitWidth="200.0" layoutX="93.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../Imagens/profile-user.png" />
                     </image>
                 </ImageView>
-                <Label alignment="CENTER" ellipsisString="" layoutX="86.0" layoutY="149.0" text="Dennis Bozzi">
+                <Label fx:id="nomeVendedorLogado" alignment="CENTER" ellipsisString="" layoutX="10.0" layoutY="149.0" prefHeight="30.0" prefWidth="260.0" text="Dennis Bozzi">
                     <font>
                         <Font name="Segoe UI Light" size="20.0" />
                     </font>
                 </Label>
-                <Label alignment="CENTER" contentDisplay="CENTER" ellipsisString="" layoutX="99.0" layoutY="172.0" text="vendedor" textAlignment="CENTER">
+                <Label fx:id="cargoUsuario" alignment="CENTER" contentDisplay="CENTER" ellipsisString="" layoutX="10.0" layoutY="172.0" prefHeight="30.0" prefWidth="258.0" text="vendedor" textAlignment="CENTER">
                     <font>
                         <Font name="Segoe UI Light" size="20.0" />
                     </font>
@@ -381,7 +519,7 @@
                         <Font name="Segoe UI Light" size="48.0" />
                     </font>
                 </Label>
-                <JFXTextField fx:id="autocompleteNome" focusColor="#095742" labelFloat="true" layoutX="387.0" layoutY="221.0" prefHeight="27.0" prefWidth="378.0" promptText="Nome" style="-fx-padding: 0;">
+                <JFXTextField fx:id="autocompleteNome" editable="false" focusColor="#095742" labelFloat="true" layoutX="387.0" layoutY="221.0" prefHeight="27.0" prefWidth="378.0" promptText="Nome" style="-fx-padding: 0;">
                     <font>
                         <Font name="Segoe UI Light" size="18.0" />
                     </font>
@@ -397,17 +535,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </JFXTextField>
-                <JFXButton layoutX="534.0" layoutY="843.0" prefHeight="30.0" prefWidth="252.0" style="-fx-background-color: #095742;" text="Confirmar" textFill="WHITE">
-                    <font>
-                        <Font name="System Bold" size="14.0" />
-                    </font>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                </JFXButton>
-                <ListView fx:id="listaVendas" layoutX="187.0" layoutY="324.0" prefHeight="360.0" prefWidth="960.0" />
-                <Pane layoutX="187.0" layoutY="659.0" prefHeight="25.0" prefWidth="960.0" style="-fx-background-color: #09574235;" />
-                <JFXButton contentDisplay="TOP" layoutX="634.0" layoutY="733.0" style="-fx-background-color: #095742;" text="Adicionar" textFill="WHITE">
+                <JFXButton contentDisplay="TOP" layoutX="704.0" layoutY="733.0" onAction="#abreListaProdutos" prefHeight="61.0" prefWidth="67.0" style="-fx-background-color: #095742;" text="Adicionar" textFill="WHITE">
                     <graphic>
                         <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -419,9 +547,71 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </JFXButton>
+            <TableView fx:id="tabelaCarrinho" layoutX="292.0" layoutY="293.0" maxWidth="1229.0" onMouseClicked="#clicarParaAbrirEditorDeProduto" prefHeight="403.0" prefWidth="742.0" style="-fx-background-color: #00000010;" stylesheets="@../Styles/style.css">
+               <columns>
+                  <TableColumn fx:id="carrinhoId" prefWidth="50.0" style="-fx-border-width: 0;" text="#" />
+                  <TableColumn fx:id="carrinhoFoto" prefWidth="230.0" style="-fx-border-width: 0;" text="Foto" />
+                  <TableColumn fx:id="carrinhoNome" minWidth="0.0" prefWidth="230.0" style="-fx-border-width: 0;" text="Nome" />
+                  <TableColumn fx:id="carrinhoValor" minWidth="0.0" prefWidth="230.0" style="-fx-border-width: 0;" text="Valor" />
+               </columns>
+            </TableView>
+            <JFXButton contentDisplay="TOP" layoutX="548.0" layoutY="733.0" onAction="#limparCarrinho" prefHeight="61.0" prefWidth="67.0" style="-fx-background-color: #095742;" text="Limpar" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagens/clean.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <Pane layoutX="292.0" layoutY="667.0" prefHeight="30.0" prefWidth="742.0" style="-fx-background-color: #09574295;">
+               <children>
+                  <Label layoutX="565.0" layoutY="4.0" prefHeight="20.0" prefWidth="67.0" text="Valor Total:" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelValorTotal" layoutX="634.0" layoutY="4.0" prefHeight="20.0" prefWidth="96.0" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="14.0" layoutY="4.0" prefHeight="20.0" text="Comissão:" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelComissao" layoutX="80.0" layoutY="4.0" prefHeight="20.0" prefWidth="118.0" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Label fx:id="camposNulosLabel" layoutX="559.0" layoutY="813.0" text="Nenhum produto selecionado." textFill="RED" visible="false">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="camposNulosLabel2" layoutX="560.0" layoutY="813.0" text="Preencha o campo nome e CPF." textFill="RED" visible="false">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+                <JFXButton layoutX="534.0" layoutY="843.0" onAction="#abreOpcoesDePagamento" prefHeight="30.0" prefWidth="252.0" style="-fx-background-color: #095742;" text="Confirmar" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </JFXButton>
             </children>
         </Pane>
-        <Pane fx:id="paneRelatorios" layoutX="280.0" prefHeight="900.0" prefWidth="1320.0" visible="false">
+        <Pane fx:id="paneRelatorios" layoutX="280.0" prefHeight="900.0" prefWidth="1320.0">
             <children>
                 <Label alignment="CENTER" ellipsisString="" layoutX="565.0" layoutY="54.0" text="Consultar">
                     <font>
@@ -443,7 +633,7 @@
                   <Font name="Segoe UI Light" size="36.0" />
                </font>
             </Label>
-            <TableView fx:id="tabelaProdutos" layoutX="61.0" layoutY="236.0" maxWidth="1200.0" onMouseClicked="#clicarParaAbrirEditorDeProduto" prefHeight="564.0" prefWidth="1200.0" style="-fx-background-color: #00000010;" stylesheets="@../Styles/style.css">
+            <TableView fx:id="tabelaProdutos" layoutX="61.0" layoutY="236.0" maxWidth="1200.0" onMouseClicked="#clicarParaAbrirEditorDeProduto" prefHeight="564.0" prefWidth="1200.0" style="-fx-background-color: #00000010;" stylesheets="@../Styles/style.css" visible="false">
               <columns>
                   <TableColumn fx:id="colunaIdProdutos" prefWidth="50.0" style="-fx-border-width: 0;" text="#" />
                 <TableColumn fx:id="colunaFotoProdutos" prefWidth="230.0" style="-fx-border-width: 0;" text="Foto" />
@@ -462,15 +652,16 @@
                   <TableColumn fx:id="colunaCelularCliente" maxWidth="240.0" minWidth="0.0" prefWidth="240.0" resizable="false" style="-fx-border-width: 0;" text="Celular" />
                </columns>
             </TableView>
-            <TableView fx:id="tabelaVendas" layoutX="61.0" layoutY="236.0" maxWidth="1200.0" prefHeight="564.0" prefWidth="1200.0" style="-fx-background-color: #00000010;" stylesheets="@../Styles/style.css" visible="false">
+            <TableView fx:id="tabelaVendas" layoutX="61.0" layoutY="236.0" maxWidth="1200.0" prefHeight="564.0" prefWidth="1200.0" style="-fx-background-color: #00000010;" stylesheets="@../Styles/style.css">
                <columns>
-                  <TableColumn prefWidth="300.0" text="Comprador" />
-                  <TableColumn minWidth="0.0" prefWidth="300.0" text="Vendedor" />
-                  <TableColumn minWidth="0.0" prefWidth="300.0" text="Data" />
-                  <TableColumn minWidth="0.0" prefWidth="300.0" text="Valor Total" />
+                  <TableColumn fx:id="colunaIdVenda" minWidth="0.0" prefWidth="48.0" text="#" />
+                  <TableColumn fx:id="colunaCompradorVenda" prefWidth="288.0" text="Comprador" />
+                  <TableColumn fx:id="colunaVendedorVenda" minWidth="0.0" prefWidth="288.0" text="Vendedor" />
+                  <TableColumn fx:id="colunaDataVenda" minWidth="0.0" prefWidth="288.0" text="Data" />
+                  <TableColumn fx:id="colunaValorVenda" minWidth="0.0" prefWidth="288.0" text="Valor Total" />
                </columns>
             </TableView>
-            <JFXButton layoutX="222.0" layoutY="211.0" onAction="#mostraTabelaProdutos" prefHeight="25.0" prefWidth="258.0" style="-fx-background-color: #095742; -fx-background-radius: 5 5 0 0;" text="Produtos" textFill="WHITE">
+            <JFXButton layoutX="222.0" layoutY="211.0" onAction="#mostraTabelaProdutos" prefHeight="25.0" prefWidth="258.0" style="-fx-background-color: #095742; -fx-background-radius: 5 5 0 0;" text="Produtos Disponíveis" textFill="WHITE">
                <font>
                   <Font name="SansSerif Regular" size="14.0" />
                </font>
@@ -630,7 +821,7 @@
             </Label>
             </children>
         </Pane>
-      <Pane fx:id="paneCadastrarAtributo" layoutX="280.0" prefHeight="900.0" prefWidth="1320.0">
+      <Pane fx:id="paneCadastrarAtributo" layoutX="280.0" prefHeight="900.0" prefWidth="1320.0" visible="false">
          <children>
             <JFXTextField fx:id="nomeAtributoField" focusColor="#095742" labelFloat="true" layoutX="510.0" layoutY="313.0" prefHeight="25.0" prefWidth="300.0" promptText="Novo Atributo">
                <cursor>

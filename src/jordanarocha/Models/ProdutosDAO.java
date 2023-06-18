@@ -63,7 +63,7 @@ public class ProdutosDAO {
     public ObservableList<Produto> getProdutos() {
         ObservableList<Produto> produtos = FXCollections.observableArrayList();
 
-        try (Connection connection = getConnection(); Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery("SELECT idProduto, nomeProduto, valorProduto, acessorioProduto, ligaProduto, pedraProduto, tamanhoProduto, fotoProduto FROM produto")) {
+        try (Connection connection = getConnection(); Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery("SELECT idProduto, nomeProduto, valorProduto, acessorioProduto, ligaProduto, pedraProduto, tamanhoProduto, fotoProduto FROM produto WHERE statusProduto = 1")) {
 
             while (rs.next()) {
                 int id = rs.getInt("idProduto");

@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="anchorZim" prefHeight="900.0" prefWidth="750.0" style="-fx-background-color: #09574295;" stylesheets="@../Styles/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jordanarocha.Controllers.NovoUsuarioController">
+   <children>
+      <Pane fx:id="paneAtualizaVendedor" layoutX="29.0" layoutY="8.0" prefHeight="895.0" prefWidth="696.0" style="-fx-background-color: #095742; -fx-border-color: #FFFFFF; -fx-border-radius: 5; -fx-background-radius: 5;" visible="false">
+         <children>
+            <ImageView fitHeight="64.0" fitWidth="64.0" layoutX="316.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Imagens/bonequito.png" />
+               </image>
+            </ImageView>
+            <JFXButton contentDisplay="CENTER" layoutX="639.0" layoutY="6.0" onAction="#fecharTelaEditorDeVendedor" prefHeight="44.0" prefWidth="43.0" ripplerFill="#095742" style="-fx-background-radius: 0;" styleClass="botaoExcluirCliente" stylesheets="@../Styles/style.css" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="24.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagens/fechar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXTextField fx:id="atualizaComissaoVendedor" focusColor="WHITE" labelFloat="true" layoutX="33.0" layoutY="31.0" prefHeight="30.0" prefWidth="99.0" promptText="Comissao" styleClass="fieldzim" stylesheets="@../Styles/style.css" unFocusColor="WHITE" />
+            <JFXTextField fx:id="atualizaNomeVendedor" focusColor="WHITE" labelFloat="true" layoutX="30.0" layoutY="90.0" prefHeight="30.0" prefWidth="296.0" promptText="Nome" styleClass="fieldzim" stylesheets="@../Styles/style.css" unFocusColor="WHITE" />
+            <JFXTextField fx:id="atualizaRGVendedor" focusColor="WHITE" labelFloat="true" layoutX="368.0" layoutY="90.0" prefHeight="30.0" prefWidth="296.0" promptText="RG" styleClass="fieldzim" stylesheets="@../Styles/style.css" unFocusColor="WHITE" />
+            <JFXTextField fx:id="atualizaCPFVendedor" focusColor="WHITE" labelFloat="true" layoutX="33.0" layoutY="158.0" prefHeight="30.0" prefWidth="296.0" promptText="CPF" styleClass="fieldzim" stylesheets="@../Styles/style.css" unFocusColor="WHITE" />
+            <JFXTextField fx:id="atualizaCelularVendedor" focusColor="WHITE" labelFloat="true" layoutX="368.0" layoutY="158.0" prefHeight="30.0" prefWidth="296.0" promptText="Celular" styleClass="fieldzim" stylesheets="@../Styles/style.css" unFocusColor="WHITE" />
+            <JFXTextField fx:id="atualizaEmailVendedor" focusColor="WHITE" labelFloat="true" layoutX="33.0" layoutY="228.0" prefHeight="30.0" prefWidth="296.0" promptText="Email" styleClass="fieldzim" stylesheets="@../Styles/style.css" unFocusColor="WHITE" />
+            <JFXTextField fx:id="atualizaEnderecoVendedor" focusColor="WHITE" labelFloat="true" layoutX="368.0" layoutY="228.0" prefHeight="30.0" prefWidth="296.0" promptText="Endereço" styleClass="fieldzim" stylesheets="@../Styles/style.css" unFocusColor="WHITE" />
+            <JFXTextField fx:id="atualizaAtivacaoVendedor" editable="false" focusColor="WHITE" labelFloat="true" layoutX="33.0" layoutY="294.0" prefHeight="30.0" prefWidth="296.0" promptText="Ativação" styleClass="fieldzim" stylesheets="@../Styles/style.css" unFocusColor="WHITE" />
+            <JFXTextField fx:id="atualizaDesativacaoVendedor" editable="false" focusColor="WHITE" labelFloat="true" layoutX="368.0" layoutY="294.0" prefHeight="30.0" prefWidth="296.0" promptText="Desativação" styleClass="fieldzim" stylesheets="@../Styles/style.css" unFocusColor="WHITE" />
+            <Pane layoutX="27.0" layoutY="352.0" prefHeight="153.0" prefWidth="640.0" style="-fx-border-color: white; -fx-border-radius: 5;">
+               <children>
+                  <JFXTextField fx:id="atualizaUsuarioVendedor" focusColor="WHITE" labelFloat="true" layoutX="20.0" layoutY="26.0" prefHeight="30.0" prefWidth="601.0" promptText="Usuário" styleClass="fieldzim" stylesheets="@../Styles/style.css" unFocusColor="WHITE" />
+                  <JFXTextField fx:id="atualizaSenhaVendedor" focusColor="WHITE" labelFloat="true" layoutX="19.0" layoutY="91.0" prefHeight="30.0" prefWidth="280.0" promptText="Senha" styleClass="fieldzim" stylesheets="@../Styles/style.css" unFocusColor="WHITE" />
+                  <JFXTextField fx:id="atualizaConfirmaSenhaVendedor" focusColor="WHITE" labelFloat="true" layoutX="341.0" layoutY="91.0" prefHeight="30.0" prefWidth="280.0" promptText="Confirme a Senha" styleClass="fieldzim" stylesheets="@../Styles/style.css" unFocusColor="WHITE" />
+                  <Label alignment="CENTER" layoutX="19.0" layoutY="-10.0" prefHeight="20.0" prefWidth="57.0" style="-fx-background-color: #095742;" text="Acesso" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <JFXButton fx:id="atualizaImagemBotaoVendedor" buttonType="RAISED" contentDisplay="TOP" layoutX="251.0" layoutY="527.0" onAction="#atualizaFotoVendedor" style="-fx-background-color: #095742;" text="Adicionar Imagem" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fx:id="atualizaImagemVendedor" fitHeight="132.0" fitWidth="200.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagens/default-image.jpg" />
+                     </image>
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXTextArea fx:id="atualizaObservacaoVendedor" focusColor="WHITE" labelFloat="true" layoutX="23.0" layoutY="727.0" prefHeight="95.0" prefWidth="650.0" promptText="Observação" styleClass="fieldzim" stylesheets="@../Styles/style.css" unFocusColor="WHITE" />
+            <Label fx:id="labelMensagem" alignment="CENTER" layoutX="289.0" layoutY="829.0" text="TlabelMensagemt" textFill="RED" visible="false">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <JFXButton buttonType="RAISED" layoutX="219.0" layoutY="849.0" onAction="#salvarAlteracaoVendedor" prefHeight="25.0" prefWidth="258.0" ripplerFill="WHITE" style="-fx-background-color: FFFFFF20;" text="Confirmar" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+         </children>
+      </Pane>
+      <Pane fx:id="paneFundoDaModal" prefHeight="921.0" prefWidth="750.0" style="-fx-background-color: #33333380;" visible="false" />
+      <Pane fx:id="modalConfirmaAlterarVendedor" layoutX="200.0" layoutY="325.0" prefHeight="250.0" prefWidth="350.0" style="-fx-background-color: #095742; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: FFFFFF;" visible="false">
+         <children>
+            <JFXButton layoutX="76.0" layoutY="166.0" onAction="#confirmaAlteracaoVendedor" style="-fx-background-color: #FFFFFF25;" text="Sim" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton layoutX="212.0" layoutY="166.0" onAction="#fechaConfirmaAlteracaoVendedor" style="-fx-background-color: #FFFFFF25;" text="Não" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <Label layoutX="40.0" layoutY="68.0" text="Tem certeza que deseja alterar" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="42.0" layoutY="98.0" text=" as informações do vendedor?" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="paneConfirmDemitirVendedor" layoutX="10.0" layoutY="10.0" prefHeight="204.0" prefWidth="350.0" style="-fx-background-color: #095742; -fx-border-radius: 5; -fx-background-radius: 5;" visible="false">
+         <children>
+            <JFXButton layoutX="79.0" layoutY="133.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#atualizaStatusVendedor" ripplerFill="WHITE" style="-fx-background-color: #FFFFFF25;" text="Sim" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton layoutX="214.0" layoutY="133.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#fechaConfirmDemitirVendedor" ripplerFill="RED" style="-fx-background-color: #FFFFFF25;" text="Não" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <Label layoutX="88.0" layoutY="52.0" text="Tem certeza que deseja" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="85.0" layoutY="77.0" text=" desabilitar o vendedor?" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="paneConfirmaExcluirVendedor" prefHeight="204.0" prefWidth="350.0" style="-fx-background-color: #095742; -fx-border-radius: 5; -fx-background-radius: 5;" visible="false">
+         <children>
+            <JFXButton layoutX="79.0" layoutY="133.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#excluirVendedor" ripplerFill="WHITE" style="-fx-background-color: #FFFFFF25;" text="Sim" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton layoutX="214.0" layoutY="133.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#fecharConfirmExcluirVendedor" ripplerFill="RED" style="-fx-background-color: #FFFFFF25;" text="Não" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <Label layoutX="11.0" layoutY="66.0" text="Tem certeza que deseja excluir o vendedor?" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="paneConfirmaExcluirAtributo" prefHeight="204.0" prefWidth="350.0" style="-fx-background-color: #095742; -fx-border-radius: 5; -fx-background-radius: 5;" visible="false">
+         <children>
+            <JFXButton layoutX="79.0" layoutY="133.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#excluirAtributo" ripplerFill="WHITE" style="-fx-background-color: #FFFFFF25;" text="Sim" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton layoutX="214.0" layoutY="133.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#fecharConfirmExcluirAtributo" ripplerFill="RED" style="-fx-background-color: #FFFFFF25;" text="Não" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <Label layoutX="16.0" layoutY="65.0" text="Tem certeza que deseja excluir o atributo?" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <JFXButton fx:id="botaoNovoUsuario" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="90.0" layoutY="45.0" onAction="#mostraTelaCadastro" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #095742; -fx-background-radius: 5 5 0 0;" text="Novo Usuário" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="botaoMostraVendedores" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="285.0" layoutY="45.0" onAction="#mostraTelaVendedores" prefHeight="35.0" prefWidth="180.0" ripplerFill="WHITE" style="-fx-background-color: #095742; -fx-background-radius: 5 5 0 0;" text="Usuários" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="botaoMostraAtributos" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="480.0" layoutY="45.0" onAction="#mostraTelaAtributos" prefHeight="35.0" prefWidth="180.0" ripplerFill="WHITE" style="-fx-background-color: #095742; -fx-background-radius: 5 5 0 0;" text="Atributos" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#voltaCadastro" style="-fx-background-color: none; -fx-padding: 0;">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="45.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Imagens/voltar.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Pane fx:id="paneCadastroVendedores" layoutY="71.0" prefHeight="850.0" prefWidth="750.0" style="-fx-background-color: #095742;">
+         <children>
+            <JFXTextField fx:id="loginField" focusColor="WHITE" labelFloat="true" layoutX="55.0" layoutY="50.0" prefHeight="25.0" prefWidth="640.0" promptText="Login" styleClass="fieldzim" unFocusColor="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXTextField>
+            <JFXPasswordField fx:id="senhaField" focusColor="WHITE" labelFloat="true" layoutX="55.0" layoutY="110.0" prefHeight="25.0" prefWidth="280.0" promptText="Senha" styleClass="fieldzim" unFocusColor="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXPasswordField>
+            <JFXPasswordField fx:id="confirmaSenha" focusColor="WHITE" labelFloat="true" layoutX="415.0" layoutY="110.0" prefWidth="280.0" promptText="Repita a senha" styleClass="fieldzim" unFocusColor="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXPasswordField>
+            <JFXTextField fx:id="nomeField" focusColor="WHITE" labelFloat="true" layoutX="55.0" layoutY="185.0" prefHeight="25.0" prefWidth="640.0" promptText="Nome" styleClass="fieldzim" unFocusColor="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXTextField>
+            <JFXTextField fx:id="cpfField" focusColor="WHITE" labelFloat="true" layoutX="54.0" layoutY="245.0" prefHeight="25.0" prefWidth="280.0" promptText="CPF" styleClass="fieldzim" unFocusColor="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXTextField>
+            <JFXTextField fx:id="rgField" focusColor="WHITE" labelFloat="true" layoutX="415.0" layoutY="245.0" prefHeight="25.0" prefWidth="280.0" promptText="RG" styleClass="fieldzim" unFocusColor="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXTextField>
+            <JFXTextField fx:id="telField" focusColor="WHITE" labelFloat="true" layoutX="54.0" layoutY="305.0" prefHeight="25.0" prefWidth="281.0" promptText="Telefone" styleClass="fieldzim" unFocusColor="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXTextField>
+            <JFXTextField fx:id="comissaoField" focusColor="WHITE" labelFloat="true" layoutX="415.0" layoutY="305.0" prefHeight="25.0" prefWidth="281.0" promptText="Comissão" styleClass="fieldzim" unFocusColor="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXTextField>
+            <JFXTextField fx:id="enderecoField" focusColor="WHITE" labelFloat="true" layoutX="55.0" layoutY="365.0" prefHeight="25.0" prefWidth="640.0" promptText="Endereço" styleClass="fieldzim" unFocusColor="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXTextField>
+            <JFXTextField fx:id="emailField" focusColor="WHITE" labelFloat="true" layoutX="55.0" layoutY="425.0" prefHeight="25.0" prefWidth="640.0" promptText="Email" styleClass="fieldzim" unFocusColor="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXTextField>
+            <JFXTextArea fx:id="observacaoField" focusColor="WHITE" labelFloat="true" layoutX="55.0" layoutY="485.0" prefHeight="74.0" prefWidth="640.0" promptText="Observação" styleClass="fieldzim" unFocusColor="WHITE" />
+            <JFXButton fx:id="anexarImagemButton" buttonType="RAISED" contentDisplay="TOP" layoutX="277.0" layoutY="584.0" onAction="#anexarImagem" style="-fx-background-color: #095742;" text="Adicionar Imagem" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fx:id="imagemTemporaria" fitHeight="132.0" fitWidth="200.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagens/default-image.jpg" />
+                     </image>
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" layoutX="159.0" layoutY="792.0" onAction="#adicionarVendedor" prefHeight="30.0" prefWidth="432.0" ripplerFill="WHITE" style="-fx-background-color: #095742; -fx-background-radius: 2;" text="Confirmar" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <Label fx:id="cpfInvalido" layoutX="54.0" layoutY="278.0" text="Label" textFill="RED" visible="false">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="cadastroConcluido" layoutX="296.0" layoutY="764.0" text="Novo vendedor cadastrado!" textFill="WHITE" visible="false">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="senhaNaoConfere" layoutX="468.0" layoutY="149.0" text="Senha não confere ou inválida!" textFill="RED" visible="false">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="comissaoInvalida" layoutX="503.0" layoutY="339.0" text="Comissão Inválida!" textFill="RED" visible="false">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="camposNulos" layoutX="278.0" layoutY="764.0" text="Existem campos não preenchidos!" textFill="RED" visible="false">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="paneListaVendedores" layoutY="71.0" prefHeight="850.0" prefWidth="750.0" style="-fx-background-color: #095742;" visible="false">
+         <children>
+            <TableView fx:id="tabelaVendedores" layoutX="50.0" layoutY="29.0" onMouseClicked="#clicarParaAbrirEditorDeVendedor" prefHeight="743.0" prefWidth="650.0" style="-fx-background-color: #095742; -fx-border-color: white; -fx-border-radius: 5;" styleClass="tabelaVendedores" stylesheets="@../Styles/style.css">
+              <columns>
+                  <TableColumn fx:id="colunaIDVendedor" editable="false" prefWidth="25.0" style="-fx-border-width: 0;" styleClass="colunasAtributos" text="#" />
+                <TableColumn fx:id="colunaNomeVendedor" editable="false" prefWidth="166.0" style="-fx-border-width: 0;" styleClass="colunasAtributos" text="Nome" />
+                <TableColumn fx:id="colunaCPFVendedor" editable="false" prefWidth="166.0" style="-fx-border-width: 0;" styleClass="colunasAtributos" text="CPF" />
+                  <TableColumn fx:id="colunaCelularVendedor" editable="false" prefWidth="166.0" style="-fx-border-width: 0;" styleClass="colunasAtributos" text="Celular" />
+                  <TableColumn fx:id="colunaStatusVendedor" editable="false" prefWidth="125.0" style="-fx-border-width: 0;" styleClass="colunasAtributos" text="Status" />
+              </columns>
+            </TableView>
+            <JFXButton contentDisplay="CENTER" layoutX="343.0" layoutY="780.0" onAction="#abrirConfirmExcluirVendedor" prefHeight="44.0" prefWidth="64.0" ripplerFill="#095742" style="-fx-background-radius: 0;" styleClass="botaoExcluirCliente" stylesheets="@../Styles/style.css" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="48.0" fitWidth="71.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagens/delete.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton contentDisplay="CENTER" layoutX="556.0" layoutY="780.0" onAction="#abrirConfirmDemitirVendedor" prefHeight="44.0" prefWidth="64.0" ripplerFill="#095742" style="-fx-background-radius: 0;" styleClass="botaoExcluirCliente" stylesheets="@../Styles/style.css" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="48.0" fitWidth="71.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagens/desabilitar2.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+         </children>
+      </Pane>
+      <Pane fx:id="paneListaAtributos" layoutY="71.0" prefHeight="850.0" prefWidth="750.0" style="-fx-background-color: #095742;" visible="false">
+         <children>
+            <TableView fx:id="tabelaAtributos" layoutX="50.0" layoutY="29.0" prefHeight="743.0" prefWidth="650.0" style="-fx-background-color: #095742; -fx-border-color: white; -fx-border-radius: 5;" styleClass="tabelaVendedores" stylesheets="@../Styles/style.css">
+               <columns>
+                  <TableColumn fx:id="colunaIDAtributo" editable="false" prefWidth="50.0" style="-fx-border-width: 0;" styleClass="colunasAtributos" text="#" />
+                  <TableColumn fx:id="colunaNomeAtributo" editable="false" prefWidth="300.0" style="-fx-border-width: 0;" styleClass="colunasAtributos" text="Nome atributo" />
+                  <TableColumn fx:id="colunaValorAtributo" editable="false" prefWidth="300.0" style="-fx-border-width: 0;" styleClass="colunasAtributos" text="Tipo/Tamanho/Liga/Pedra" />
+               </columns>
+            </TableView>
+            <JFXButton contentDisplay="CENTER" layoutX="343.0" layoutY="780.0" onAction="#abrirConfirmExcluirAtributo" prefHeight="44.0" prefWidth="64.0" ripplerFill="#095742" style="-fx-background-radius: 0;" styleClass="botaoExcluirCliente" stylesheets="@../Styles/style.css" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="48.0" fitWidth="71.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagens/delete.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

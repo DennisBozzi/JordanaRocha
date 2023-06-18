@@ -126,3 +126,52 @@
 .comboboxEdicaoProduto .list-view .list-cell:hover {
     -fx-background-color: #09574280;
 }
+
+/*Tabela escolha produtos*/
+#colunaEscolheId, #colunaEscolheNome, #colunaEscolheFoto, #colunaEscolheValor {
+    -fx-alignment: CENTER;
+}
+
+#tabelaEscolhaProduto .column-header > .label {
+    -fx-text-fill:  #FFFFFF;
+    -fx-background-color: #095742;
+    -fx-border-width: 0;
+}
+
+#tabelaEscolhaProduto .column-header {
+    -fx-background-color: #095742;
+    -fx-border-width: 0;
+}
+
+#tabelaEscolhaProduto {
+    -fx-border-width: 1;
+    -fx-border-color: none;
+    -fx-background-color: transparent;
+}
+
+#tabelaEscolhaProduto .column-header > .label {
+    -fx-text-fill:  #FFFFFF;
+    -fx-border-color: #FFFFFF;
+    -fx-border-width: 0;
+}
+
+#tabelaEscolhaProduto .table-cell {
+    -fx-text-fill: #FFFFFF;
+}
+
+#tabelaEscolhaProduto .table-row-cell{
+    -fx-background-color: #095742;
+}
+
+#tabelaEscolhaProduto .table-cell:focused .table-row-cell:selected .table-cell {
+    -fx-text-fill: #FFFFFF;
+}
+
+#tabelaEscolhaProduto:focused .table-row-cell:selected{
+    -fx-background-color: #FFFFFF20;
+}
+
+/*Tabela de produtos escolhidos*/
+#carrinhoId, #carrinhoFoto, #carrinhoNome, #carrinhoValor {
+    -fx-alignment: CENTER;
+}

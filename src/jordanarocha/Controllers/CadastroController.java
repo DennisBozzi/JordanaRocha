@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import static javafx.scene.input.KeyCode.ENTER;
 import javafx.scene.input.KeyEvent;
 import jordanarocha.App;
+import jordanarocha.Tabelas.Vendedor;
 
 public class CadastroController implements Initializable {
 
@@ -23,13 +24,22 @@ public class CadastroController implements Initializable {
     @FXML
     private Label labelErrado;
 
+    //Vendedor Logado
+    private Vendedor vendedorLogado;
+
+    //Método que atribui o Vendedor Logado
+    public void setVendedorLogado(Vendedor vendedor) {
+        this.vendedorLogado = vendedor;
+        // Agora você pode usar vendedorLogado neste controlador
+    }
+
     //Método de login
     @FXML
     private void Login() {
 
         //Conferindo login e senha
         if (loginField.getText().equals("admin") && passwordField.getText().equals("admin")) {
-            App.trocaTela("novoUsuario");
+            App.trocaTela("novoUsuario", vendedorLogado);
             labelErrado.setVisible(false);
             loginField.clear();
             passwordField.clear();
@@ -47,9 +57,9 @@ public class CadastroController implements Initializable {
                 break;
         }
     }
-    
-    public void voltaLogin(ActionEvent event){
-        App.trocaTela("login");
+
+    public void voltaLogin(ActionEvent event) {
+        App.trocaTela("login", vendedorLogado);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package jordanarocha.Controllers;
 
 import com.jfoenix.controls.*;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.*;
@@ -94,6 +95,15 @@ public class NovoUsuarioController implements Initializable {
 
     //Variáveis temporárias
     String nomeTemp, cpfTemp, celularTemp, emailTemp, enderecoTemp, observacaoTemp, ativacaoTemp, comissaoTemp, usuarioTemp, senhaTemp, confirmaSenhaTemp, rgTemp;
+
+    //Vendedor Logado
+    private Vendedor vendedorLogado;
+
+    //Método que atribui o Vendedor Logado
+    public void setVendedorLogado(Vendedor vendedor) {
+        this.vendedorLogado = vendedor;
+        // Agora você pode usar vendedorLogado neste controlador
+    }
 
     //Método para Alternar entre a Tabela de Vendedores Cadastrados e a Tela para Cadastro de Vendedores
     void mudaTela(String tela) {
@@ -207,7 +217,7 @@ public class NovoUsuarioController implements Initializable {
 
     //Voltar para a tela de login para Cadastro
     public void voltaCadastro(ActionEvent event) {
-        App.trocaTela("cadastro");
+        App.trocaTela("cadastro", vendedorLogado);
     }
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -328,7 +338,7 @@ public class NovoUsuarioController implements Initializable {
 
     }
 
-//Método para anexar imagem para Cadastro de Vendedor
+    //Método para anexar imagem para Cadastro de Vendedor
     @FXML
     public void anexarImagem(ActionEvent event) {
 
@@ -340,13 +350,35 @@ public class NovoUsuarioController implements Initializable {
 
         if (arquivoSelecionado != null) {
             try {
-                BufferedImage bufferedImage = ImageIO.read(arquivoSelecionado);
+                BufferedImage originalImage = ImageIO.read(arquivoSelecionado);
+
+                //Calculando as dimensões do recorte
+                int croppedSize = Math.min(Math.min(originalImage.getWidth(), originalImage.getHeight()), 500);
+
+                //Calculando as coordenadas x e y para o recorte no centro da imagem
+                int x = (originalImage.getWidth() - croppedSize) / 2;
+                int y = (originalImage.getHeight() - croppedSize) / 2;
+
+                //Recortando a imagem
+                BufferedImage croppedImage = originalImage.getSubimage(x, y, croppedSize, croppedSize);
+
+                // Redimensionando para 94x94
+                java.awt.Image tmp = croppedImage.getScaledInstance(94, 94, java.awt.Image.SCALE_SMOOTH);
+                BufferedImage resizedImage = new BufferedImage(94, 94, BufferedImage.TYPE_INT_ARGB);
+                Graphics2D g2d = resizedImage.createGraphics();
+                g2d.drawImage(tmp, 0, 0, null);
+                g2d.dispose();
+
+                //Convertendo a imagem recortada e redimensionada para um array de bytes
                 ByteArrayOutputStream byteOutput = new ByteArrayOutputStream();
-                ImageIO.write(bufferedImage, "png", byteOutput);
+                ImageIO.write(resizedImage, "png", byteOutput);
                 imagemBytes = byteOutput.toByteArray();
 
-                Image imagem = new Image(arquivoSelecionado.toURI().toString());
+                //Convertendo a imagem recortada e redimensionada para um objeto Image do JavaFX
+                ByteArrayInputStream byteInput = new ByteArrayInputStream(imagemBytes);
+                Image imagem = new Image(byteInput);
                 imagemTemporaria.setImage(imagem);
+
             } catch (IOException e) {
                 System.out.println("Erro ao converter imagem: " + e.getMessage());
             }
@@ -393,7 +425,9 @@ public class NovoUsuarioController implements Initializable {
         Vendedor vendedorSelecionado = tabelaVendedores.getSelectionModel().getSelectedItem();
         int id = vendedorSelecionado.getIdVendedor();
 
-        CRUDvendedor.excluirVendedor(id);
+        if (id != 1) {
+            CRUDvendedor.excluirVendedor(id);
+        }
 
         atualizaVendedores();
         fecharConfirmExcluirVendedor();
@@ -644,7 +678,6 @@ public class NovoUsuarioController implements Initializable {
 
     //Método para mudar a foto do Vendedor (UPDATE)
     public void atualizaFotoVendedor() {
-
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Selecione a imagem do Vendedor");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Imagens", "*.jpg", "*.jpeg", "*.png"));
@@ -653,13 +686,34 @@ public class NovoUsuarioController implements Initializable {
 
         if (arquivoSelecionado != null) {
             try {
-                BufferedImage bufferedImage = ImageIO.read(arquivoSelecionado);
+                BufferedImage originalImage = ImageIO.read(arquivoSelecionado);
+
+                //Calculando as dimensões do recorte
+                int croppedSize = Math.min(Math.min(originalImage.getWidth(), originalImage.getHeight()), 500);
+
+                //Calculando as coordenadas x e y para o recorte no centro da imagem
+                int x = (originalImage.getWidth() - croppedSize) / 2;
+                int y = (originalImage.getHeight() - croppedSize) / 2;
+
+                //Recortando a imagem
+                BufferedImage croppedImage = originalImage.getSubimage(x, y, croppedSize, croppedSize);
+
+                // Redimensionando para 94x94
+                java.awt.Image tmp = croppedImage.getScaledInstance(94, 94, java.awt.Image.SCALE_SMOOTH);
+                BufferedImage resizedImage = new BufferedImage(94, 94, BufferedImage.TYPE_INT_ARGB);
+                Graphics2D g2d = resizedImage.createGraphics();
+                g2d.drawImage(tmp, 0, 0, null);
+                g2d.dispose();
+
+                //Convertendo a imagem recortada e redimensionada para um array de bytes
                 ByteArrayOutputStream byteOutput = new ByteArrayOutputStream();
-                ImageIO.write(bufferedImage, "png", byteOutput);
+                ImageIO.write(resizedImage, "png", byteOutput);
                 byte[] imagemBytes = byteOutput.toByteArray();
 
-                Image imagem = new Image(arquivoSelecionado.toURI().toString());
-                imagemTemporaria.setImage(imagem);
+                //Convertendo a imagem recortada e redimensionada para um objeto Image do JavaFX
+                ByteArrayInputStream byteInput = new ByteArrayInputStream(imagemBytes);
+                Image imagem = new Image(byteInput);
+                atualizaImagemVendedor.setImage(imagem);
 
                 // Criar objeto Vendedor com ID e foto atualizados
                 Vendedor vendedor = new Vendedor(vendedorSelecionado.getIdVendedor(), imagemBytes);
@@ -674,7 +728,6 @@ public class NovoUsuarioController implements Initializable {
         // Vincula a propriedade layoutX do botão à metade da largura do painel.
         abrirPainelDeEditarVendedor(vendedorSelecionado);
         anexarImagemButton.layoutXProperty().bind(paneFundoDaModal.widthProperty().subtract(anexarImagemButton.widthProperty()).divide(2));
-
     }
 
     //Método para anexar a imagem do Vendedor que será atualizada (UPDATE)
@@ -695,7 +748,7 @@ public class NovoUsuarioController implements Initializable {
                 imagemBytes = byteOutput.toByteArray();
 
                 Image imagem = new Image(arquivoSelecionado.toURI().toString());
-                imagemTemporaria.setImage(imagem);
+                atualizaImagemVendedor.setImage(imagem);
             } catch (IOException e) {
                 System.out.println("Erro ao converter imagem: " + e.getMessage());
             }
@@ -733,7 +786,11 @@ public class NovoUsuarioController implements Initializable {
     //Desabilitando Vendedor 
     @FXML
     public void atualizaStatusVendedor() {
-        CRUDvendedor.updateStatusVendedor(vendedorDesabilitado);
+        
+        if (vendedorDesabilitado.getIdVendedor() != 1) {
+            CRUDvendedor.updateStatusVendedor(vendedorDesabilitado);
+        }
+
         fechaConfirmDemitirVendedor();
         atualizaVendedores();
     }

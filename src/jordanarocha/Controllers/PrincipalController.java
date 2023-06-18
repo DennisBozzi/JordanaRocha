@@ -4,11 +4,9 @@ import com.jfoenix.controls.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.*;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.text.NumberFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -25,9 +23,11 @@ import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.*;
 import javafx.util.Duration;
 import javax.imageio.ImageIO;
+import javax.xml.bind.DatatypeConverter;
 import jordanarocha.*;
 import jordanarocha.Models.*;
 import jordanarocha.Tabelas.*;
@@ -52,22 +52,24 @@ public class PrincipalController implements Initializable {
 
     @FXML
     private Pane paneComeco, modalConfirmaAlterarCliente, paneVender, paneCadastrarProduto, paneCadastrarCliente, paneCadastrarAtributo, paneRelatorios, paneSubMenu, markComeco, markVender, markRelatorios,
-            markCadastrar, paneFundoDaModal, modalConfirmaApagarProduto, modalEditaProduto;
+            markCadastrar, paneFundoDaModal, modalConfirmaApagarProduto, modalEditaProduto, paneListaProdutos, modalFormaDePagamento;
 
     @FXML
-    private Label cpfJaExiste, cpfEInvalido, labelProdutos, labelClientes, labelVendas, headerConfirmaExcluir, labelConfirmaAtualizado, labelMensagem, bodyConfirmaExcluir, labelAtributo, labelProduto, labelAtualizaProduto;
+    private Label cpfJaExiste, cpfEInvalido, labelProdutos, labelClientes, labelVendas, headerConfirmaExcluir, labelConfirmaAtualizado, labelMensagem, bodyConfirmaExcluir, labelAtributo, labelProduto, labelAtualizaProduto,
+            nomeVendedorLogado, cargoUsuario, nenhumProduto, produtoEscolhido, labelValorTotal, labelComissao, camposNulosLabel, camposNulosLabel2;
 
     @FXML
     private TableColumn<Cliente, String> colunaNomeCliente, colunaCPFCliente, colunaEnderecoCliente, colunaEmailCliente, colunaCelularCliente;
 
     @FXML
-    private TableColumn<Produto, String> colunaIdProdutos, colunaJoiaProdutos, colunaLigaProdutos, colunaAcessorioProdutos;
+    private TableColumn<Produto, String> colunaIdProdutos, colunaJoiaProdutos, colunaLigaProdutos, colunaAcessorioProdutos, colunaEscolheId, colunaEscolheNome, carrinhoId, carrinhoNome, colunaIdVenda, colunaCompradorVenda,
+            colunaVendedorVenda, colunaDataVenda;
 
     @FXML
-    private TableColumn<Produto, Double> colunaValorProdutos;
+    private TableColumn<Produto, Double> colunaValorProdutos, colunaEscolheValor, carrinhoValor, colunaValorVenda;
 
     @FXML
-    private TableColumn<Produto, byte[]> colunaFotoProdutos;
+    private TableColumn<Produto, byte[]> colunaFotoProdutos, colunaEscolheFoto, carrinhoFoto;
 
     @FXML
     private JFXComboBox<String> comboAcessorio, comboLiga, comboPedra, comboTamanho, comboAtualizaAcessorio, comboAtualizaPedra, comboAtualizaLiga, comboAtualizaTamanho;
@@ -88,10 +90,10 @@ public class PrincipalController implements Initializable {
     private Button anexarImagemButton;
 
     @FXML
-    private ImageView imagemTemporaria, imagemAtualizaProduto;
+    private ImageView imagemTemporaria, imagemAtualizaProduto, imagemVendedorLogado;
 
     @FXML
-    private TableView<Produto> tabelaProdutos;
+    private TableView<Produto> tabelaProdutos, tabelaEscolhaProduto, tabelaCarrinho;
 
     @FXML
     private TableView<Cliente> tabelaClientes;
@@ -105,6 +107,9 @@ public class PrincipalController implements Initializable {
     @FXML
     private JFXDialog dialogExcluir;
 
+    @FXML
+    private ToggleGroup pagamento;
+
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //Instanciando formatador
     Formatacao formatacao = new Formatacao();
@@ -114,15 +119,28 @@ public class PrincipalController implements Initializable {
 
     //Intanciando a classe de trocar tabelas de consulta
     TrocaTabela tabela;
+    NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
 
     //Instanciando a classe do CRUD
     JoalheriaDAO joalheriaDao = new JoalheriaDAO();
     AtributosDAO atributoDAO = new AtributosDAO();
     CRUDAtributo CRUDatributos = new CRUDAtributo();
     ProdutosDAO produtosDAO = new ProdutosDAO();
+    VendasDAO vendasDAO = new VendasDAO();
 
-    private Cliente cliente;
+    //Variável do produto que será atualizado
     private Produto produtoAtualiza;
+
+    //Variáveis do Vendedor que Conectou
+    private Vendedor vendedorLogado;
+    String primeiroNome;
+    Image imagemLogado;
+    int idLogado;
+    double valorTotal;
+    double comissao;
+
+    //Variáveis para a realização da Venda
+    List<Produto> carrinho = new ArrayList<>();
 
     //Variáveis para conferir se foram alteradas
     private String nomeTemp, cpfTemp, enderecoTemp, emailTemp, celularTemp, observacaoTemp, nomeProdutoTemp, valorProdutoTemp, acessorioProdutoTemp, pedraProdutoTemp, ligaProdutoTemp, tamanhoProdutoTemp;
@@ -140,6 +158,56 @@ public class PrincipalController implements Initializable {
 
     //Variável para converter a imagem para byte
     private byte[] imagemBytes = null;
+
+    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //Método que atribui o Vendedor Logado
+    public void setVendedorLogado(Vendedor vendedor) {
+        this.vendedorLogado = vendedor;
+        // Agora você pode usar vendedorLogado neste controlador
+        formataVendedorLogado();
+    }
+
+    //Método que formata o vendedor que acabou de logar
+    public void formataVendedorLogado() {
+
+        if (vendedorLogado != null) {
+
+            //Atribuindo a primeiroNome o nome do vendedor logado
+            primeiroNome = vendedorLogado.getNomeVendedor().trim();
+            String[] nomeSeparado = primeiroNome.split(" ");
+            String primeiroNome = nomeSeparado[0];
+
+            if (vendedorLogado.getFotoVendedor() != null) {
+
+                //Atribuindo a imagemLogado a imagem do vendedor logado
+                imagemLogado = formatacao.convertByteToImage(vendedorLogado.getFotoVendedor());
+
+            }
+
+            //Atribuindo a idLogado o id do vendedor logado
+            idLogado = vendedorLogado.getIdVendedor();
+
+            //Colocando no Label o nome do Vendedor
+            nomeVendedorLogado.setText(primeiroNome);
+
+            //Colocando no ImageView a imagem do Vendedor
+            imagemVendedorLogado.setImage(imagemLogado);
+
+            //Atribuindo o cargo, dependendo da pessoa
+            if (vendedorLogado.getIdVendedor() == 1) {
+                cargoUsuario.setText("administrador");
+            } else {
+                cargoUsuario.setText("vendedor");
+            }
+
+            //Criando um círculo que será usado para recortar a imagem
+            Circle clip = new Circle(47, 47, 47); //47 é a metade de 94, então o círculo será centralizado na imagem
+
+            //Aplicando o recorte ao ImageView
+            imagemVendedorLogado.setClip(clip);
+
+        }
+    }
 
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //Métodos que irão nos botoes pára alternar os panes
@@ -206,7 +274,10 @@ public class PrincipalController implements Initializable {
 
     //Método para sair da tela e voltar para o Login
     public void sairPrincipal() {
-        App.trocaTela("login");
+        App.trocaTela("login", vendedorLogado);
+        limparCarrinho();
+        tela.TrocaPane("comeco");
+        limparCamposVenda();
     }
 
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -267,8 +338,11 @@ public class PrincipalController implements Initializable {
     //Método para adicionarAtributo
     public void adicionarAtributo(ActionEvent event) {
         Atributo newAtributo = CRUDatributos.getAtributoFromInput(nomeAtributoField, btnAcessorio, btnLiga, btnPedra, btnTamanho);
+
         atributoDAO.addAtributo(newAtributo);
+
         nomeAtributoField.clear();
+
         btnAcessorio.setSelected(true);
 
         popularComboBox();
@@ -402,17 +476,12 @@ public class PrincipalController implements Initializable {
                 String lowerCaseFilter = newValue.toLowerCase();
                 if (produto.getNomeProduto().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if (produto.getTamanhoProduto().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
                 }
                 return false;
             });
         });
 
         // Define a lista de itens da tabela como a lista de clientes filtrados
-        tabelaProdutos.setItems(produtosFiltrados);
-
-        // Define a lista de itens da tabela como a lista de produtos
         tabelaProdutos.setItems(produtosFiltrados);
     }
 
@@ -548,8 +617,6 @@ public class PrincipalController implements Initializable {
 
                 produtoAtualiza = new Produto(id, nome, valor, acessorio, liga, pedra, tamanho);
 
-                System.out.println(produtoAtualiza.toString());
-
                 abreConfirmacaoEditarProduto();
                 atualizaProdutos();
                 fecharModalEditarProduto();
@@ -591,8 +658,9 @@ public class PrincipalController implements Initializable {
     }
 
     public void abreConfirmacaoEditarProduto() {
-        System.out.println("Tudo certo!");
         produtosDAO.updateProduto(produtoAtualiza);
+
+        fadeLabelConfirmaAtualizado(labelConfirmaAtualizado);
     }
 
     //Atualiza ComboBox do Painel de Atualiza Produto (UPDATE)
@@ -942,21 +1010,203 @@ public class PrincipalController implements Initializable {
         fecharTelaEditorDeCliente();
         joalheriaDao.updateCliente(clienteAtualizado);
         atualizaClientes();
-        fadeLabelConfirmaAtualizado();
+        fadeLabelConfirmaAtualizado(labelConfirmaAtualizado);
     }
 
     //Fade para o label, após 2 segundos ela some - Uma mensagem de confirmação que foi atualizado o cadastro
-    public void fadeLabelConfirmaAtualizado() {
-        labelConfirmaAtualizado.setVisible(true);
-        FadeTransition fade = new FadeTransition(Duration.seconds(4), labelConfirmaAtualizado);
+    public void fadeLabelConfirmaAtualizado(Label label) {
+        label.setVisible(true);
+        FadeTransition fade = new FadeTransition(Duration.seconds(4), label);
         fade.setFromValue(1.0);
         fade.setToValue(0.0);
-        fade.setOnFinished(event -> labelConfirmaAtualizado.setVisible(false));
+        fade.setOnFinished(event -> label.setVisible(false));
         fade.play();
     } //Fim do Update
 
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //Adicionar Venda (CREATE)
+    public void adicionarVenda() {
+
+        int idVendedor = vendedorLogado.getIdVendedor();
+
+        int idCliente = joalheriaDao.getIdByCPF(autocompleteCPF.getText());
+
+        RadioButton botaoSelecionado = (RadioButton) pagamento.getSelectedToggle();
+
+        String formaPagamento = botaoSelecionado.getText();
+
+        List<Integer> idsProdutos = carrinho.stream().map(Produto::getIdProduto).collect(Collectors.toList());
+
+        System.out.println(formaPagamento);
+
+        vendasDAO.inserirDadosVendas(idVendedor, idCliente, idsProdutos, valorTotal, formaPagamento, comissao);
+
+        limparCamposVenda();
+        limparCarrinho();
+        fechaOpcoesDePagamento();
+    }
+
+    //Método que abre opções de pagamento
+    public void abreOpcoesDePagamento() {
+        if (!autocompleteCPF.getText().equals("") && !autocompleteNome.getText().equals("")) {
+
+            if (!carrinho.isEmpty()) {
+
+                paneFundoDaModal.setVisible(true);
+                paneFundoDaModal.toFront();
+
+                modalFormaDePagamento.setVisible(true);
+                modalFormaDePagamento.toFront();
+
+            } else {
+                fadeLabelConfirmaAtualizado(camposNulosLabel);
+            }
+
+        } else {
+            fadeLabelConfirmaAtualizado(camposNulosLabel2);
+        }
+    }
+
+    //Método que fecha a modal de pagamento
+    public void fechaOpcoesDePagamento() {
+
+        paneFundoDaModal.setVisible(false);
+        paneFundoDaModal.toBack();
+
+        modalFormaDePagamento.setVisible(false);
+        modalFormaDePagamento.toBack();
+
+    }
+
+    //Método que abre lista de produtos
+    public void abreListaProdutos() {
+
+        paneFundoDaModal.setVisible(true);
+        paneFundoDaModal.toFront();
+
+        paneListaProdutos.setVisible(true);
+        paneListaProdutos.toFront();
+
+        populaListaProdutos();
+
+    }
+
+    //Método que fecha lista de produtos
+    public void fechaListaProdutos() {
+
+        paneFundoDaModal.setVisible(false);
+        paneFundoDaModal.toFront();
+
+        paneListaProdutos.setVisible(false);
+        paneListaProdutos.toFront();
+
+    }
+
+    //Popular lista de produtos
+    public void populaListaProdutos() {
+        ObservableList<Produto> produtos = produtosDAO.getProdutos();
+
+        colunaEscolheId.setCellValueFactory(new PropertyValueFactory<>("idProduto"));
+        colunaEscolheNome.setCellValueFactory(new PropertyValueFactory<>("nomeProduto"));
+        colunaEscolheValor.setCellValueFactory(new PropertyValueFactory<>("valorProduto"));
+        colunaEscolheFoto.setCellValueFactory(new PropertyValueFactory<>("fotoProduto"));
+
+        //Formatando a coluna de valor para aparecer R$#.###.###,##
+        colunaEscolheValor.setCellFactory(new FormattedCurrencyCellFactory());
+
+        //"Formatando" a coluna de imagem para ela aparecer em uma imageView
+        colunaEscolheFoto.setCellFactory(param -> new ImageTableCell());
+
+        tabelaEscolhaProduto.setItems(produtos);
+    }
+
+    //Ao clicar no botao confirmar de escolher o produto
+    public void escolheProduto() {
+
+        Produto produtoSelecionado = tabelaEscolhaProduto.getSelectionModel().getSelectedItem();
+
+        // Verifica se produtoSelecionado é nulo
+        if (produtoSelecionado == null) {
+            fadeLabelConfirmaAtualizado(nenhumProduto);
+            return;
+        }
+
+        int id = produtoSelecionado.getIdProduto();
+
+        Produto produtoCompleto = produtosDAO.getProdutoById(id);
+
+        if (carrinho == null) {
+            carrinho = new ArrayList<>(); //Se carrinho for nulo, inicializa.
+        }
+
+        if (!carrinho.contains(produtoCompleto)) {
+            carrinho.add(produtoCompleto);
+        } else { //Caso já exista o produto na lista
+            fadeLabelConfirmaAtualizado(produtoEscolhido);
+            System.out.println("Já existe o produto");
+        }
+
+        listaCarrinho();
+
+    }
+
+    //Adiciona ao carrinho de comprar o produto selecionado
+    public void listaCarrinho() {
+        //Observable List que recebe o getProdutos, ou seja, recebe todos os produtos do DB
+        ObservableList<Produto> produtosEscolhidos = FXCollections.observableArrayList(carrinho);
+
+        carrinhoId.setCellValueFactory(new PropertyValueFactory<>("idProduto"));
+        carrinhoNome.setCellValueFactory(new PropertyValueFactory<>("nomeProduto"));
+        carrinhoValor.setCellValueFactory(new PropertyValueFactory<>("valorProduto"));
+
+        //Formatando a coluna de valor para aparecer R$#.###.###,##
+        carrinhoValor.setCellFactory(new FormattedCurrencyCellFactory());
+
+        // Coluna de imagem
+        carrinhoFoto.setCellValueFactory(new PropertyValueFactory<>("fotoProduto"));
+
+        //"Formatando" a coluna de imagem para ela aparecer em uma imageView
+        carrinhoFoto.setCellFactory(param -> new ImageTableCell());
+
+        tabelaCarrinho.setItems(produtosEscolhidos);
+
+        valorTotal = 0;
+        comissao = 0;
+
+        for (int i = 0; i < produtosEscolhidos.size(); i++) {
+            valorTotal += produtosEscolhidos.get(i).getValorProduto();
+            comissao = (vendedorLogado.getComissaoVendedor() / 100) * valorTotal;
+        }
+
+        String valorTotalString = formatter.format(valorTotal);
+        String comissaoString = formatter.format(comissao);
+
+        labelValorTotal.setText(valorTotalString);
+        labelComissao.setText(comissaoString);
+
+        labelValorTotal.setText(valorTotalString);
+        labelComissao.setText(comissaoString);
+
+        fechaListaProdutos();
+    }
+
+    //Limpa todos os produtos adicionados no carrinho
+    public void limparCarrinho() {
+
+        carrinho.clear();
+
+        listaCarrinho();
+
+    }
+
+    public void limparCamposVenda() {
+        autocompleteCPF.setText("");
+        autocompleteNome.setText("");
+    }
+
+    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //Initialize
+    @Override
     public void initialize(URL url, ResourceBundle rb) {
 
         //Iniciando TrocaTela
@@ -967,8 +1217,7 @@ public class PrincipalController implements Initializable {
         tabela = new TrocaTabela(tabelaProdutos, tabelaClientes, tabelaVendas, labelClientes, labelProdutos, labelVendas);
 
         //Autocomplete Nome e CPF da tela de Venda
-        formatacao.autocompleteCliente(autocompleteNome);
-        formatacao.autocompleteCPF(autocompleteCPF);
+        formatacao.autocompleteCPF(autocompleteCPF, autocompleteNome);
 
         //Formata CPF da tela de Venda
         formatacao.formataCPFEnquantoDigita(autocompleteCPF);
@@ -984,13 +1233,12 @@ public class PrincipalController implements Initializable {
         //Formata Valor produto para aceitar só números
         formatacao.soNumerosTextField(fieldValorProduto);
 
+        //Populando as ComboBox
         popularComboBox();
 
         //Comando que popula a lista de Clientes
         atualizaClientes();
         atualizaProdutos();
-
-        System.out.println(comboAcessorio.getValue());
     }
 
 }

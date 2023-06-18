@@ -139,7 +139,6 @@ public class JoalheriaDAO {
         return cliente;
     }
 
-    
     //Método para Excluir Cliente, passando o CPF como parametro.
     public void excluirCliente(String cpf) {
         String sql = "DELETE FROM clientes WHERE cpf_cliente = ?";
@@ -173,4 +172,111 @@ public class JoalheriaDAO {
             e.printStackTrace();
         }
     }
+
+    //Método para obter lista de CPFs
+    public ObservableList<String> getCPFs() {
+        ObservableList<String> cpfs = FXCollections.observableArrayList();
+        String sql = "SELECT cpf_cliente FROM clientes";
+
+        try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                cpfs.add(resultSet.getString("cpf_cliente"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cpfs;
+    }
+
+    //Método para obter lista de nomes
+    public ObservableList<String> getNomes() {
+        ObservableList<String> nomes = FXCollections.observableArrayList();
+        String sql = "SELECT nome_cliente FROM clientes";
+
+        try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                nomes.add(resultSet.getString("nome_cliente"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return nomes;
+    }
+
+    // Método para obter o nome associado a um CPF
+    public String getNomeByCPF(String cpf) {
+        String nome = null;
+        String sql = "SELECT nome_cliente FROM clientes WHERE cpf_cliente = ?";
+
+        try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, cpf);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                nome = resultSet.getString("nome_cliente");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return nome;
+    }
+
+    // Método para obter o CPF associado a um Nome
+    public String getCPFByNome(String nome) {
+        String cpf = null;
+        String sql = "SELECT cpf_cliente FROM clientes WHERE nome_cliente = ?";
+
+        try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, nome);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                cpf = resultSet.getString("cpf_cliente");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cpf;
+    }
+
+    // Método para obter o ID associado a um CPF
+    public int getIdByCPF(String cpf) {
+        int id = -1;
+        String sql = "SELECT id_cliente FROM clientes WHERE cpf_cliente = ?";
+
+        try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, cpf);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                id = resultSet.getInt("id_cliente");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return id;
+    }
+
 }

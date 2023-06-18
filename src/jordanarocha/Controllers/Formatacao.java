@@ -1,39 +1,58 @@
 package jordanarocha.Controllers;
 
 import com.jfoenix.controls.JFXTextField;
+import java.io.ByteArrayInputStream;
 import java.util.Arrays;
 import java.util.List;
+import javafx.collections.ObservableList;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.util.converter.IntegerStringConverter;
+import jordanarocha.Models.JoalheriaDAO;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
 /* -------------------------------------- BIBLIOTECA CONTROLSFX ---------------------------------------*/
 public class Formatacao {
 
+    //Instanciando clientesDAO
+    JoalheriaDAO clientesDAO = new JoalheriaDAO();
+
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //Autocomplete Nome TextField
-    public void autocompleteCliente(JFXTextField textField) {
+    public void autocompleteCliente(JFXTextField textFieldNome, JFXTextField textFieldCPF) {
 
-        List<String> suggestions = Arrays.asList("Rafaela da Silva Menegardo", "Dennis Vinicius Freitas Bozzi", "Pedro Nivaldo Bozzi"); //Lista que é populada para Clientes
+        List<String> suggestions = clientesDAO.getNomes(); //Lista que é populada para Clientes
 
-        AutoCompletionBinding<String> autoCompletionBinding = TextFields.bindAutoCompletion(textField, suggestions); //Método da biblioteca ControlsFX
+        AutoCompletionBinding<String> autoCompletionBinding = TextFields.bindAutoCompletion(textFieldNome, suggestions); //Método da biblioteca ControlsFX
 
         autoCompletionBinding.setMinWidth(378); //O tamanho do pane que abre para o autocomplete
 
+        // Adicione um ChangeListener ao textFieldNome
+        textFieldNome.textProperty().addListener((observable, oldValue, newValue) -> {
+            // Quando o valor do textFieldNome muda, consulte o CPF associado ao novo nome e preencha o textFieldCPF
+            String cpf = clientesDAO.getCPFByNome(newValue);
+            textFieldCPF.setText(cpf);
+        });
     }
 
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //Autocomplete CPF TextField 
-    public void autocompleteCPF(JFXTextField textField) {
+    public void autocompleteCPF(JFXTextField textFieldCPF, JFXTextField textFieldNome) {
 
-        List<String> suggestions = Arrays.asList("111.222.333-45", "333.222.333-45", "444.222.333-45"); //Lista que é populada para CPF
+        ObservableList<String> cpfs = clientesDAO.getCPFs(); // Lista que é populada para CPF
 
-        AutoCompletionBinding<String> autoCompletionBinding = TextFields.bindAutoCompletion(textField, suggestions); //Método da biblioteca ControlsFX
+        AutoCompletionBinding<String> autoCompletionBinding = TextFields.bindAutoCompletion(textFieldCPF, cpfs); //Método da biblioteca ControlsFX
 
         autoCompletionBinding.setMinWidth(141); //O tamanho do pane que abre para o autocomplete
 
+        // Adicione um ChangeListener ao textFieldCPF
+        textFieldCPF.textProperty().addListener((observable, oldValue, newValue) -> {
+            // Quando o valor do textFieldCPF muda, consulte o nome associado ao novo CPF e preencha o textFieldNome
+            String nome = clientesDAO.getNomeByCPF(newValue);
+            textFieldNome.setText(nome);
+        });
     }
 
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -169,5 +188,17 @@ public class Formatacao {
                     return null;
                 });
         textField.setTextFormatter(textFormatter);
+    }
+
+    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //Converte byte to image
+    public Image convertByteToImage(byte[] byteData) {
+        if (byteData == null) {
+            return null;
+        }
+
+        ByteArrayInputStream bis = new ByteArrayInputStream(byteData);
+        Image image = new Image(bis);
+        return image;
     }
 }
