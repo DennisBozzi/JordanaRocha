@@ -512,7 +512,7 @@
                 </Label>
             </children>
         </Pane>
-        <Pane fx:id="paneVender" layoutX="280.0" prefHeight="900.0" prefWidth="1320.0" stylesheets="@../Styles/style.css">
+        <Pane fx:id="paneVender" layoutX="280.0" prefHeight="900.0" prefWidth="1320.0" stylesheets="@../Styles/style.css" visible="false">
             <children>
                 <Label alignment="CENTER" ellipsisString="" layoutX="587.0" layoutY="70.0" text="Vender">
                     <font>
@@ -611,7 +611,7 @@
                 </JFXButton>
             </children>
         </Pane>
-        <Pane fx:id="paneRelatorios" layoutX="280.0" prefHeight="900.0" prefWidth="1320.0" visible="false">
+        <Pane fx:id="paneRelatorios" layoutX="280.0" prefHeight="900.0" prefWidth="1320.0">
             <children>
                 <Label alignment="CENTER" ellipsisString="" layoutX="565.0" layoutY="54.0" text="Consultar">
                     <font>
@@ -633,7 +633,7 @@
                   <Font name="Segoe UI Light" size="36.0" />
                </font>
             </Label>
-            <TableView fx:id="tabelaProdutos" layoutX="61.0" layoutY="236.0" maxWidth="1200.0" onMouseClicked="#clicarParaAbrirEditorDeProduto" prefHeight="564.0" prefWidth="1200.0" style="-fx-background-color: #00000010;" stylesheets="@../Styles/style.css">
+            <TableView fx:id="tabelaProdutos" layoutX="61.0" layoutY="236.0" maxWidth="1200.0" onMouseClicked="#clicarParaAbrirEditorDeProduto" prefHeight="564.0" prefWidth="1200.0" style="-fx-background-color: #00000010;" stylesheets="@../Styles/style.css" visible="false">
               <columns>
                   <TableColumn fx:id="colunaIdProdutos" prefWidth="50.0" style="-fx-border-width: 0;" text="#" />
                 <TableColumn fx:id="colunaFotoProdutos" prefWidth="230.0" style="-fx-border-width: 0;" text="Foto" />
@@ -652,12 +652,13 @@
                   <TableColumn fx:id="colunaCelularCliente" maxWidth="240.0" minWidth="0.0" prefWidth="240.0" resizable="false" style="-fx-border-width: 0;" text="Celular" />
                </columns>
             </TableView>
-            <TableView fx:id="tabelaVendas" layoutX="61.0" layoutY="236.0" maxWidth="1200.0" prefHeight="564.0" prefWidth="1200.0" style="-fx-background-color: #00000010;" stylesheets="@../Styles/style.css" visible="false">
+            <TableView fx:id="tabelaVendas" layoutX="61.0" layoutY="236.0" maxWidth="1200.0" prefHeight="564.0" prefWidth="1200.0" style="-fx-background-color: #00000010;" stylesheets="@../Styles/style.css">
                <columns>
-                  <TableColumn prefWidth="300.0" text="Comprador" />
-                  <TableColumn minWidth="0.0" prefWidth="300.0" text="Vendedor" />
-                  <TableColumn minWidth="0.0" prefWidth="300.0" text="Data" />
-                  <TableColumn minWidth="0.0" prefWidth="300.0" text="Valor Total" />
+                  <TableColumn fx:id="colunaIdVenda" minWidth="0.0" prefWidth="48.0" text="#" />
+                  <TableColumn fx:id="colunaCompradorVenda" prefWidth="288.0" text="Comprador" />
+                  <TableColumn fx:id="colunaVendedorVenda" minWidth="0.0" prefWidth="288.0" text="Vendedor" />
+                  <TableColumn fx:id="colunaDataVenda" minWidth="0.0" prefWidth="288.0" text="Data" />
+                  <TableColumn fx:id="colunaValorVenda" minWidth="0.0" prefWidth="288.0" text="Valor Total" />
                </columns>
             </TableView>
             <JFXButton layoutX="222.0" layoutY="211.0" onAction="#mostraTabelaProdutos" prefHeight="25.0" prefWidth="258.0" style="-fx-background-color: #095742; -fx-background-radius: 5 5 0 0;" text="Produtos Disponíveis" textFill="WHITE">

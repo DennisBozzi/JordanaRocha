@@ -23,7 +23,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: FFF8ED;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jordanarocha.Controllers.PrincipalController">
+<AnchorPane id="AnchorPane" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: FFF8ED;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jordanarocha.Controllers.PrincipalController">
     <children>
       <Pane fx:id="modalFormaDePagamento" layoutX="635.0" layoutY="200.0" prefHeight="494.0" prefWidth="350.0" style="-fx-background-color: #095742; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: FFFFFF;" visible="false">
          <children>
@@ -512,7 +512,7 @@
                 </Label>
             </children>
         </Pane>
-        <Pane fx:id="paneVender" layoutX="280.0" prefHeight="900.0" prefWidth="1320.0" stylesheets="@../Styles/style.css" visible="false">
+        <Pane fx:id="paneVender" layoutX="280.0" prefHeight="900.0" prefWidth="1320.0" stylesheets="@../Styles/style.css">
             <children>
                 <Label alignment="CENTER" ellipsisString="" layoutX="587.0" layoutY="70.0" text="Vender">
                     <font>
@@ -596,7 +596,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="camposNulosLabel2" layoutX="560.0" layoutY="813.0" text="Preencha o campo nome e CPF." textFill="RED" visible="false">
+            <Label fx:id="camposNulosLabel2" layoutX="583.0" layoutY="813.0" text="Preencha o campo CPF." textFill="RED" visible="false">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -611,7 +611,7 @@
                 </JFXButton>
             </children>
         </Pane>
-        <Pane fx:id="paneRelatorios" layoutX="280.0" prefHeight="900.0" prefWidth="1320.0">
+        <Pane fx:id="paneRelatorios" layoutX="280.0" prefHeight="900.0" prefWidth="1320.0" visible="false">
             <children>
                 <Label alignment="CENTER" ellipsisString="" layoutX="565.0" layoutY="54.0" text="Consultar">
                     <font>
