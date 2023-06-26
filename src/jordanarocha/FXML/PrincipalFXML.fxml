@@ -242,6 +242,62 @@
             </Label>
          </children>
       </Pane>
+      <Pane fx:id="modalVenda" layoutX="460.0" layoutY="60.0" prefHeight="800.0" prefWidth="700.0" style="-fx-background-color: #095742;" visible="false">
+         <children>
+            <Label layoutX="44.0" layoutY="28.0" text="Venda Realizada" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="64.0" fitWidth="64.0" layoutX="318.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Imagens/money%20(1).png" />
+               </image>
+            </ImageView>
+            <JFXButton contentDisplay="CENTER" layoutX="650.0" layoutY="6.0" onAction="#fechaModalVenda" prefHeight="44.0" prefWidth="43.0" ripplerFill="#095742" style="-fx-background-radius: 0;" styleClass="botaoExcluirCliente" stylesheets="@../Styles/style.css" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="24.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagens/fechar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXTextField fx:id="clienteModalVenda" editable="false" focusColor="WHITE" labelFloat="true" layoutX="161.0" layoutY="122.0" prefHeight="30.0" prefWidth="378.0" promptText="Cliente" styleClass="fieldzim" stylesheets="@../Styles/style.css" unFocusColor="WHITE" />
+            <JFXTextField fx:id="vendedorModalVenda" editable="false" focusColor="WHITE" labelFloat="true" layoutX="161.0" layoutY="177.0" prefHeight="30.0" prefWidth="378.0" promptText="Vendedor" styleClass="fieldzim" stylesheets="@../Styles/style.css" unFocusColor="WHITE" />
+            <JFXTextField fx:id="comissaoModalVenda" editable="false" focusColor="WHITE" labelFloat="true" layoutX="161.0" layoutY="227.0" prefHeight="30.0" prefWidth="378.0" promptText="Comissao" styleClass="fieldzim" stylesheets="@../Styles/style.css" unFocusColor="WHITE" />
+            <JFXTextField fx:id="diaModalVenda" editable="false" focusColor="WHITE" labelFloat="true" layoutX="161.0" layoutY="277.0" prefHeight="30.0" prefWidth="378.0" promptText="Dia" styleClass="fieldzim" stylesheets="@../Styles/style.css" unFocusColor="WHITE" />
+            <JFXTextField fx:id="pagamentoModalVenda" editable="false" focusColor="WHITE" labelFloat="true" layoutX="161.0" layoutY="327.0" prefHeight="30.0" prefWidth="378.0" promptText="Pagamento" styleClass="fieldzim" stylesheets="@../Styles/style.css" unFocusColor="WHITE" />
+            <Label alignment="CENTER" layoutX="266.0" layoutY="392.0" prefHeight="27.0" prefWidth="169.0" text="Produtos" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <TableView fx:id="tabelaModal" layoutX="80.0" layoutY="439.0" prefHeight="200.0" prefWidth="540.0" style="-fx-border-color: white;" stylesheets="@../Styles/style.css">
+              <columns>
+                <TableColumn fx:id="colunaImagemModal" prefWidth="180.0" text="Imagem" />
+                <TableColumn fx:id="colunaNomeModal" prefWidth="180.0" text="Nome" />
+                  <TableColumn fx:id="colunaValorModal" prefWidth="180.0" text="Valor" />
+              </columns>
+            </TableView>
+            <JFXButton buttonType="RAISED" layoutX="221.0" layoutY="738.0" onAction="#fechaModalVenda" prefHeight="25.0" prefWidth="258.0" ripplerFill="WHITE" style="-fx-background-color: FFFFFF20;" text="Fechar" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <Label fx:id="valorModalVenda" alignment="CENTER" layoutX="266.0" layoutY="676.0" prefHeight="27.0" prefWidth="169.0" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
       <Pane fx:id="modalConfirmaApagarVenda" layoutX="625.0" layoutY="325.0" prefHeight="250.0" prefWidth="350.0" style="-fx-background-color: #095742; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: FFFFFF;" visible="false">
          <children>
             <JFXButton layoutX="76.0" layoutY="166.0" onAction="#apagarVendas" style="-fx-background-color: #FFFFFF25;" text="Sim" textFill="WHITE">
@@ -677,7 +733,7 @@
                   <TableColumn fx:id="colunaCelularCliente" maxWidth="240.0" minWidth="0.0" prefWidth="240.0" resizable="false" style="-fx-border-width: 0;" text="Celular" />
                </columns>
             </TableView>
-            <TableView fx:id="tabelaVendas" layoutX="61.0" layoutY="236.0" maxWidth="1200.0" prefHeight="564.0" prefWidth="1200.0" style="-fx-background-color: #00000010;" stylesheets="@../Styles/style.css">
+            <TableView fx:id="tabelaVendas" layoutX="61.0" layoutY="236.0" maxWidth="1200.0" onMouseClicked="#clicarParaAbrirVenda" prefHeight="564.0" prefWidth="1200.0" style="-fx-background-color: #00000010;" stylesheets="@../Styles/style.css">
                <columns>
                   <TableColumn fx:id="colunaIdVenda" minWidth="0.0" prefWidth="48.0" text="#" />
                   <TableColumn fx:id="colunaCompradorVenda" prefWidth="288.0" text="Comprador" />

@@ -137,10 +137,11 @@ public class VendasDAO {
         return produtos;
     }
 
-    // Método para deletar uma venda
+    //Método para Deletar a venda
     public void deleteVenda(int idVendas) {
         String sqlVendasProduto = "DELETE FROM vendas_produto WHERE idVendas = ?";
         String sqlVendas = "DELETE FROM vendas WHERE idVendas = ?";
+        String sqlUpdateProduto = "UPDATE produto SET statusProduto = 1 WHERE idProduto IN (SELECT idProduto FROM vendas_produto WHERE idVendas = ?)";
 
         Connection connection = null;
 
@@ -149,6 +150,11 @@ public class VendasDAO {
 
             // Inicia uma transação
             connection.setAutoCommit(false);
+
+            // Atualiza o statusProduto para 1 na tabela produto para todos os produtos associados à venda
+            PreparedStatement preparedStatementProduto = connection.prepareStatement(sqlUpdateProduto);
+            preparedStatementProduto.setInt(1, idVendas);
+            preparedStatementProduto.executeUpdate();
 
             // Deleta os registros relacionados na tabela vendas_produto
             PreparedStatement preparedStatementVendasProduto = connection.prepareStatement(sqlVendasProduto);
@@ -183,6 +189,48 @@ public class VendasDAO {
                 }
             }
         }
+    }
+
+    public ObservableList<Produto> getProdutosVendidoss(int idVendas) {
+        ObservableList<Produto> produtosVendidos = FXCollections.observableArrayList();
+        String sql = "SELECT p.* FROM produto p JOIN vendas_produto vp ON p.idProduto = vp.idProduto WHERE vp.idVendas = ?";
+
+        Connection connection = null;
+        try {
+            connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, idVendas);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Produto produto = new Produto();
+
+                produto.setIdProduto(resultSet.getInt("idProduto"));
+                produto.setNomeProduto(resultSet.getString("nomeProduto"));
+                produto.setValorProduto(resultSet.getDouble("valorProduto"));
+                produto.setAcessorioProduto(resultSet.getString("acessorioProduto"));
+                produto.setLigaProduto(resultSet.getString("acessorioProduto"));
+                produto.setPedraProduto(resultSet.getString("pedraProduto"));
+                produto.setTamanhoProduto(resultSet.getString("tamanhoProduto"));
+                produto.setFotoProduto(resultSet.getBytes("fotoProduto"));
+
+                produtosVendidos.add(produto);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException excep) {
+                    excep.printStackTrace();
+                }
+            }
+        }
+
+        return produtosVendidos;
     }
 
 }

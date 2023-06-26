@@ -45,7 +45,7 @@
 
 #colunaCelularCliente, #colunaEmailCliente, #colunaEnderecoCliente, #colunaCPFCliente, #colunaNomeCliente, #colunaIDVendedor, #colunaNomeVendedor, #colunaCPFVendedor, #colunaCelularVendedor, #colunaStatusVendedor,
 #colunaIdProdutos, #colunaFotoProdutos, #colunaJoiaProdutos, #colunaAcessorioProdutos, #colunaLigaProdutos, #colunaValorProdutos, #colunaEscolheId, #colunaEscolheNome, #colunaEscolheFoto, #colunaEscolheValor,
-#colunaIDAtributo, #colunaNomeAtributo, #colunaValorAtributo, #colunaIdVenda, #colunaCompradorVenda, #colunaVendedorVenda, #colunaDataVenda, #colunaValorVenda{
+#colunaIDAtributo, #colunaNomeAtributo, #colunaValorAtributo, #colunaIdVenda, #colunaCompradorVenda, #colunaVendedorVenda, #colunaDataVenda, #colunaValorVenda, #colunaImagemModal, #colunaNomeModal, #colunaValorModal{
     -fx-alignment: CENTER;
     -fx-border-width: 0;
 }
@@ -160,3 +160,45 @@
 #carrinhoId, #carrinhoFoto, #carrinhoNome, #carrinhoValor {
     -fx-alignment: CENTER;
 }
+
+/*Tabela Modal*/
+
+#tabelaModal .column-header > .label {
+    -fx-text-fill:  #FFFFFF;
+    -fx-background-color: #095742;
+    -fx-border-width: 0;
+}
+
+#tabelaModal .column-header {
+    -fx-background-color: #095742;
+    -fx-border-width: 0;
+}
+
+#tabelaModal {
+    -fx-border-width: 1;
+    -fx-border-color: none;
+    -fx-background-color: transparent;
+}
+
+#tabelaModal .column-header > .label {
+    -fx-text-fill:  #FFFFFF;
+    -fx-border-color: #FFFFFF;
+    -fx-border-width: 0;
+}
+
+#tabelaModal .table-cell {
+    -fx-text-fill: #FFFFFF;
+}
+
+#tabelaModal .table-row-cell{
+    -fx-background-color: #095742;
+}
+
+#tabelaModal .table-cell:focused .table-row-cell:selected .table-cell {
+    -fx-text-fill: #FFFFFF;
+}
+
+#tabelaModal:focused .table-row-cell:selected{
+    -fx-background-color: #FFFFFF20;
+}
+

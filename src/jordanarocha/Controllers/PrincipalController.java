@@ -48,21 +48,22 @@ public class PrincipalController implements Initializable {
 
     @FXML
     public JFXTextField autocompleteNome, autocompleteCPF, fieldNomeProduto, fieldValorProduto, cadastroClienteNome, cadastroClienteCPF, campoPesquisa, cadastroClienteEndereco, cadastroClienteCelular, cadastroClienteEmail,
-            atualizaClienteNomeField, atualizaClienteCPFField, atualizaClienteCelularField, atualizaClienteEmailField, atualizaClienteEnderecoField, nomeAtributoField, nomeAtualizaProduto, valorAtualizaProduto;
+            atualizaClienteNomeField, atualizaClienteCPFField, atualizaClienteCelularField, atualizaClienteEmailField, atualizaClienteEnderecoField, nomeAtributoField, nomeAtualizaProduto, valorAtualizaProduto,
+            clienteModalVenda, vendedorModalVenda, comissaoModalVenda, diaModalVenda, pagamentoModalVenda;
 
     @FXML
     private Pane paneComeco, modalConfirmaAlterarCliente, paneVender, paneCadastrarProduto, paneCadastrarCliente, paneCadastrarAtributo, paneRelatorios, paneSubMenu, markComeco, markVender, markRelatorios,
-            markCadastrar, paneFundoDaModal, modalConfirmaApagarProduto, modalEditaProduto, paneListaProdutos, modalFormaDePagamento, modalConfirmaApagarVenda;
+            markCadastrar, paneFundoDaModal, modalConfirmaApagarProduto, modalEditaProduto, paneListaProdutos, modalFormaDePagamento, modalConfirmaApagarVenda, modalVenda;
 
     @FXML
     private Label cpfJaExiste, cpfEInvalido, labelProdutos, labelClientes, labelVendas, headerConfirmaExcluir, labelConfirmaAtualizado, labelMensagem, bodyConfirmaExcluir, labelAtributo, labelProduto, labelAtualizaProduto,
-            nomeVendedorLogado, cargoUsuario, nenhumProduto, produtoEscolhido, labelValorTotal, labelComissao, camposNulosLabel, camposNulosLabel2;
+            nomeVendedorLogado, cargoUsuario, nenhumProduto, produtoEscolhido, labelValorTotal, labelComissao, camposNulosLabel, camposNulosLabel2, valorModalVenda;
 
     @FXML
     private TableColumn<Cliente, String> colunaNomeCliente, colunaCPFCliente, colunaEnderecoCliente, colunaEmailCliente, colunaCelularCliente;
 
     @FXML
-    private TableColumn<Produto, String> colunaIdProdutos, colunaJoiaProdutos, colunaLigaProdutos, colunaAcessorioProdutos, colunaEscolheId, colunaEscolheNome, carrinhoId, carrinhoNome;
+    private TableColumn<Produto, String> colunaIdProdutos, colunaJoiaProdutos, colunaLigaProdutos, colunaAcessorioProdutos, colunaEscolheId, colunaEscolheNome, carrinhoId, carrinhoNome, colunaNomeModal;
 
     @FXML
     private TableColumn<Venda, String> colunaIdVenda, colunaCompradorVenda, colunaVendedorVenda;
@@ -71,10 +72,10 @@ public class PrincipalController implements Initializable {
     private TableColumn<Venda, Timestamp> colunaDataVenda;
 
     @FXML
-    private TableColumn<Produto, Double> colunaValorProdutos, colunaEscolheValor, carrinhoValor, colunaValorVenda;
+    private TableColumn<Produto, Double> colunaValorProdutos, colunaEscolheValor, carrinhoValor, colunaValorVenda, colunaValorModal;
 
     @FXML
-    private TableColumn<Produto, byte[]> colunaFotoProdutos, colunaEscolheFoto, carrinhoFoto;
+    private TableColumn<Produto, byte[]> colunaFotoProdutos, colunaEscolheFoto, carrinhoFoto, colunaImagemModal;
 
     @FXML
     private JFXComboBox<String> comboAcessorio, comboLiga, comboPedra, comboTamanho, comboAtualizaAcessorio, comboAtualizaPedra, comboAtualizaLiga, comboAtualizaTamanho;
@@ -98,7 +99,7 @@ public class PrincipalController implements Initializable {
     private ImageView imagemTemporaria, imagemAtualizaProduto, imagemVendedorLogado;
 
     @FXML
-    private TableView<Produto> tabelaProdutos, tabelaEscolhaProduto, tabelaCarrinho;
+    private TableView<Produto> tabelaProdutos, tabelaEscolhaProduto, tabelaCarrinho, tabelaModal;
 
     @FXML
     private TableView<Cliente> tabelaClientes;
@@ -1191,9 +1192,6 @@ public class PrincipalController implements Initializable {
         labelValorTotal.setText(valorTotalString);
         labelComissao.setText(comissaoString);
 
-        labelValorTotal.setText(valorTotalString);
-        labelComissao.setText(comissaoString);
-
         fechaListaProdutos();
     }
 
@@ -1278,6 +1276,73 @@ public class PrincipalController implements Initializable {
 
         modalConfirmaApagarVenda.toBack();
         modalConfirmaApagarVenda.setVisible(false);
+    }
+
+    //Método para visualizar as Vendas com 2 CLicks
+    @FXML
+    private void clicarParaAbrirVenda(MouseEvent event) {
+        if (event.getClickCount() == 2) { // Verifica se é um clique duplo
+
+            Venda selected = tabelaVendas.getSelectionModel().getSelectedItem();
+
+            if (selected != null) {
+                vendaSelecionada = selected;
+                abreModalVenda();
+                atribuirDadosModal();
+            }
+        }
+    }
+
+    public void abreModalVenda() {
+
+        paneFundoDaModal.setVisible(true);
+        paneFundoDaModal.toFront();
+
+        modalVenda.setVisible(true);
+        modalVenda.toFront();
+
+    }
+
+    public void fechaModalVenda() {
+
+        paneFundoDaModal.setVisible(false);
+        paneFundoDaModal.toBack();
+
+        modalVenda.setVisible(false);
+        modalVenda.toBack();
+
+    }
+
+    public void atribuirDadosModal() {
+
+        String valorTotalString = formatter.format(vendaSelecionada.getValorTotal());
+        String comissaoString = formatter.format(vendaSelecionada.getComissaoVenda());
+        String dataString = String.valueOf(vendaSelecionada.getDataVenda());
+
+        clienteModalVenda.setText(vendaSelecionada.getNomeCliente());
+        vendedorModalVenda.setText(vendaSelecionada.getNomeVendedor());
+        comissaoModalVenda.setText(comissaoString);
+        diaModalVenda.setText(dataString);
+        pagamentoModalVenda.setText(vendaSelecionada.getFormaPagamento());
+
+        valorModalVenda.setText(valorTotalString);
+
+        ObservableList<Produto> produtos = vendasDAO.getProdutosVendidoss(vendaSelecionada.getIdVendas());
+
+        colunaImagemModal.setCellValueFactory(new PropertyValueFactory<>("fotoProduto"));
+        colunaNomeModal.setCellValueFactory(new PropertyValueFactory<>("nomeProduto"));
+        colunaValorModal.setCellValueFactory(new PropertyValueFactory<>("valorProduto"));
+
+        //Formatando a coluna de valor para aparecer R$#.###.###,##
+        colunaValorModal.setCellFactory(new FormattedCurrencyCellFactory());
+
+        //"Formatando" a coluna de imagem para ela aparecer em uma imageView
+        colunaImagemModal.setCellFactory(param -> new ImageTableCell());
+
+        tabelaModal.setItems(produtos);
+
+        System.out.println(produtos.toString());
+
     }
 
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------

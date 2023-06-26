@@ -1,6 +1,7 @@
 package jordanarocha.Tabelas;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class Venda {
 
@@ -13,6 +14,7 @@ public class Venda {
     private double comissaoVenda;
     private String nomeVendedor;
     private String nomeCliente;
+    private List<Produto> produtosVendidos;
 
     public Venda() {
 
@@ -38,6 +40,30 @@ public class Venda {
         this.comissaoVenda = comissaoVenda;
         this.nomeVendedor = nomeVendedor;
         this.nomeCliente = nomeCliente;
+    }
+
+    public Venda(int idVendas, int idVendedor, int idCliente, double valorTotal, String formaPagamento, Timestamp dataVenda, double comissaoVenda, List<Produto> produtosVendidos) {
+        this.idVendas = idVendas;
+        this.idVendedor = idVendedor;
+        this.idCliente = idCliente;
+        this.valorTotal = valorTotal;
+        this.formaPagamento = formaPagamento;
+        this.dataVenda = dataVenda;
+        this.comissaoVenda = comissaoVenda;
+        this.produtosVendidos = produtosVendidos;
+    }
+
+    public Venda(int idVendas, int idVendedor, int idCliente, double valorTotal, String formaPagamento, Timestamp dataVenda, double comissaoVenda, String nomeVendedor, String nomeCliente, List<Produto> produtosVendidos) {
+        this.idVendas = idVendas;
+        this.idVendedor = idVendedor;
+        this.idCliente = idCliente;
+        this.valorTotal = valorTotal;
+        this.formaPagamento = formaPagamento;
+        this.dataVenda = dataVenda;
+        this.comissaoVenda = comissaoVenda;
+        this.nomeVendedor = nomeVendedor;
+        this.nomeCliente = nomeCliente;
+        this.produtosVendidos = produtosVendidos;
     }
 
     public int getIdVendas() {
@@ -112,9 +138,17 @@ public class Venda {
         this.nomeCliente = nomeCliente;
     }
 
+    public List<Produto> getProdutosVendidos() {
+        return produtosVendidos;
+    }
+
+    public void setProdutosVendidos(List<Produto> produtosVendidos) {
+        this.produtosVendidos = produtosVendidos;
+    }
+
     @Override
     public String toString() {
-        return "Venda{" + "idVendas=" + idVendas + ", idVendedor=" + idVendedor + ", idCliente=" + idCliente + ", valorTotal=" + valorTotal + ", formaPagamento=" + formaPagamento + ", dataVenda=" + dataVenda + ", comissaoVenda=" + comissaoVenda + ", nomeVendedor=" + nomeVendedor + ", nomeCliente=" + nomeCliente + '}';
+        return "Venda{" + "idVendas=" + idVendas + ", idVendedor=" + idVendedor + ", idCliente=" + idCliente + ", valorTotal=" + valorTotal + ", formaPagamento=" + formaPagamento + ", dataVenda=" + dataVenda + ", comissaoVenda=" + comissaoVenda + ", nomeVendedor=" + nomeVendedor + ", nomeCliente=" + nomeCliente + ", produtosVendidos=" + produtosVendidos + '}';
     }
 
 }
