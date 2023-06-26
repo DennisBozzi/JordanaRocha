@@ -4,20 +4,21 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import jordanarocha.Tabelas.Cliente;
 import jordanarocha.Tabelas.Produto;
+import jordanarocha.Tabelas.Venda;
 
 public class TrocaTabela {
 
     //Variáveis para o método construtor
     public TableView<Produto> tabelaProdutos;
     public TableView<Cliente> tabelaClientes;
-    public TableView<String> tabelaVendas;
+    public TableView<Venda> tabelaVendas;
 
     public Label labelClientes;
     public Label labelProdutos;
     public Label labelVendas;
 
     //Método construtor
-    public TrocaTabela(TableView<Produto> tabelaProdutos, TableView<Cliente> tabelaClientes, TableView<String> tabelaVendas, Label labelClientes, Label labelProdutos, Label labelVendas) {
+    public TrocaTabela(TableView<Produto> tabelaProdutos, TableView<Cliente> tabelaClientes, TableView<Venda> tabelaVendas, Label labelClientes, Label labelProdutos, Label labelVendas) {
         this.tabelaProdutos = tabelaProdutos;
         this.tabelaClientes = tabelaClientes;
         this.tabelaVendas = tabelaVendas;

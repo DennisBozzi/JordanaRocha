@@ -4,6 +4,7 @@ import com.jfoenix.controls.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.*;
+import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -27,7 +28,6 @@ import javafx.scene.shape.Circle;
 import javafx.stage.*;
 import javafx.util.Duration;
 import javax.imageio.ImageIO;
-import javax.xml.bind.DatatypeConverter;
 import jordanarocha.*;
 import jordanarocha.Models.*;
 import jordanarocha.Tabelas.*;
@@ -52,7 +52,7 @@ public class PrincipalController implements Initializable {
 
     @FXML
     private Pane paneComeco, modalConfirmaAlterarCliente, paneVender, paneCadastrarProduto, paneCadastrarCliente, paneCadastrarAtributo, paneRelatorios, paneSubMenu, markComeco, markVender, markRelatorios,
-            markCadastrar, paneFundoDaModal, modalConfirmaApagarProduto, modalEditaProduto, paneListaProdutos, modalFormaDePagamento;
+            markCadastrar, paneFundoDaModal, modalConfirmaApagarProduto, modalEditaProduto, paneListaProdutos, modalFormaDePagamento, modalConfirmaApagarVenda;
 
     @FXML
     private Label cpfJaExiste, cpfEInvalido, labelProdutos, labelClientes, labelVendas, headerConfirmaExcluir, labelConfirmaAtualizado, labelMensagem, bodyConfirmaExcluir, labelAtributo, labelProduto, labelAtualizaProduto,
@@ -62,8 +62,13 @@ public class PrincipalController implements Initializable {
     private TableColumn<Cliente, String> colunaNomeCliente, colunaCPFCliente, colunaEnderecoCliente, colunaEmailCliente, colunaCelularCliente;
 
     @FXML
-    private TableColumn<Produto, String> colunaIdProdutos, colunaJoiaProdutos, colunaLigaProdutos, colunaAcessorioProdutos, colunaEscolheId, colunaEscolheNome, carrinhoId, carrinhoNome, colunaIdVenda, colunaCompradorVenda,
-            colunaVendedorVenda, colunaDataVenda;
+    private TableColumn<Produto, String> colunaIdProdutos, colunaJoiaProdutos, colunaLigaProdutos, colunaAcessorioProdutos, colunaEscolheId, colunaEscolheNome, carrinhoId, carrinhoNome;
+
+    @FXML
+    private TableColumn<Venda, String> colunaIdVenda, colunaCompradorVenda, colunaVendedorVenda;
+
+    @FXML
+    private TableColumn<Venda, Timestamp> colunaDataVenda;
 
     @FXML
     private TableColumn<Produto, Double> colunaValorProdutos, colunaEscolheValor, carrinhoValor, colunaValorVenda;
@@ -99,7 +104,7 @@ public class PrincipalController implements Initializable {
     private TableView<Cliente> tabelaClientes;
 
     @FXML
-    private TableView<String> tabelaVendas;
+    private TableView<Venda> tabelaVendas;
 
     @FXML
     private JFXDialogLayout dialogConfirmaExluir;
@@ -149,6 +154,7 @@ public class PrincipalController implements Initializable {
 
     public Produto produtoSelecionado;
     public Produto produtoAtualizado;
+    public Venda vendaSelecionada;
 
     //ObservableLists da comboBox
     ObservableList<String> acessorios;
@@ -1041,6 +1047,7 @@ public class PrincipalController implements Initializable {
 
         vendasDAO.inserirDadosVendas(idVendedor, idCliente, idsProdutos, valorTotal, formaPagamento, comissao);
 
+        atualizaVendas();
         limparCamposVenda();
         limparCarrinho();
         fechaOpcoesDePagamento();
@@ -1192,16 +1199,85 @@ public class PrincipalController implements Initializable {
 
     //Limpa todos os produtos adicionados no carrinho
     public void limparCarrinho() {
-
         carrinho.clear();
-
         listaCarrinho();
-
     }
 
     public void limparCamposVenda() {
         autocompleteCPF.setText("");
         autocompleteNome.setText("");
+    }
+
+    //Método que popula as tabelas de Vendas (READ)
+    public void atualizaVendas() {
+        //Observable List que recebe o getVendas, ou seja, recebe todos as Vendas do BD
+        ObservableList<Venda> vendas = vendasDAO.getVendas();
+
+        colunaIdVenda.setCellValueFactory(new PropertyValueFactory<>("idVendas"));
+        colunaCompradorVenda.setCellValueFactory(new PropertyValueFactory<>("nomeCliente"));
+        colunaVendedorVenda.setCellValueFactory(new PropertyValueFactory<>("nomeVendedor"));
+        colunaDataVenda.setCellValueFactory(new PropertyValueFactory<>("dataVenda"));
+        colunaValorVenda.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
+
+        //Formatando a coluna de valor para aparecer R$#.###.###,##
+        colunaValorVenda.setCellFactory(new FormattedCurrencyCellFactory());
+
+        // Cria uma nova lista observável para armazenar os resultados da pesquisa, só que agora no tipo FilteredList
+        FilteredList<Venda> vendasFiltradas = new FilteredList<>(vendas, p -> true);
+
+        colunaDataVenda.setCellFactory(column -> formatacao.formatDateCell());
+
+        // Adiciona um listener ao campo de pesquisa
+        campoPesquisa.textProperty().addListener((observable, oldValue, newValue) -> {
+            vendasFiltradas.setPredicate(venda -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Verifica se o Nome do Clinte setá no valor digitado na pesquisa
+                String lowerCaseFilter = newValue.toLowerCase();
+                if (venda.getNomeCliente().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+                return false;
+            });
+        });
+        // Define a lista de itens da tabela como a lista de clientes filtrados
+        tabelaVendas.setItems(vendasFiltradas);
+    }
+
+    //Método para apagar as Vendas (DELETE)
+    @FXML
+    public void apagarVendas() {
+        vendaSelecionada = tabelaVendas.getSelectionModel().getSelectedItem();
+
+        int id = vendaSelecionada.getIdVendas();
+
+        vendasDAO.deleteVenda(id);
+
+        atualizaVendas();
+        fecharConfirmaExcluirVenda();
+
+    }
+
+    @FXML
+    public void abrirConfirmaExcluirVenda() {
+
+        paneFundoDaModal.toFront();
+        paneFundoDaModal.setVisible(true);
+
+        modalConfirmaApagarVenda.toFront();
+        modalConfirmaApagarVenda.setVisible(true);
+
+    }
+
+    @FXML
+    public void fecharConfirmaExcluirVenda() {
+        paneFundoDaModal.toBack();
+        paneFundoDaModal.setVisible(false);
+
+        modalConfirmaApagarVenda.toBack();
+        modalConfirmaApagarVenda.setVisible(false);
     }
 
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1239,6 +1315,8 @@ public class PrincipalController implements Initializable {
         //Comando que popula a lista de Clientes
         atualizaClientes();
         atualizaProdutos();
+        atualizaVendas();
+        limparCarrinho();
     }
 
 }

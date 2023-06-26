@@ -242,6 +242,31 @@
             </Label>
          </children>
       </Pane>
+      <Pane fx:id="modalConfirmaApagarVenda" layoutX="625.0" layoutY="325.0" prefHeight="250.0" prefWidth="350.0" style="-fx-background-color: #095742; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: FFFFFF;" visible="false">
+         <children>
+            <JFXButton layoutX="76.0" layoutY="166.0" onAction="#apagarVendas" style="-fx-background-color: #FFFFFF25;" text="Sim" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton layoutX="212.0" layoutY="166.0" onAction="#fecharConfirmaExcluirVenda" style="-fx-background-color: #FFFFFF25;" text="Não" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <Label layoutX="73.0" layoutY="95.0" text="Deseja excluir a venda?" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
       <Pane fx:id="modalConfirmaApagarProduto" layoutX="625.0" layoutY="325.0" prefHeight="250.0" prefWidth="350.0" style="-fx-background-color: #095742; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: FFFFFF;" visible="false">
          <children>
             <JFXButton layoutX="76.0" layoutY="166.0" onAction="#apagarProduto" style="-fx-background-color: #FFFFFF25;" text="Sim" textFill="WHITE">
@@ -596,7 +621,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="camposNulosLabel2" layoutX="560.0" layoutY="813.0" text="Preencha o campo nome e CPF." textFill="RED" visible="false">
+            <Label fx:id="camposNulosLabel2" layoutX="583.0" layoutY="813.0" text="Preencha o campo CPF." textFill="RED" visible="false">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -709,7 +734,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
-            <JFXButton fx:id="botaoExcluirVenda" contentDisplay="CENTER" layoutX="1007.0" layoutY="817.0" prefHeight="44.0" prefWidth="64.0" ripplerFill="#095742" style="-fx-background-radius: 0;" styleClass="botaoExcluirCliente" stylesheets="@../Styles/style.css" textFill="WHITE" visible="false">
+            <JFXButton fx:id="botaoExcluirVenda" contentDisplay="CENTER" layoutX="1007.0" layoutY="817.0" onAction="#abrirConfirmaExcluirVenda" prefHeight="44.0" prefWidth="64.0" ripplerFill="#095742" style="-fx-background-radius: 0;" styleClass="botaoExcluirCliente" stylesheets="@../Styles/style.css" textFill="WHITE" visible="false">
                <graphic>
                   <ImageView fitHeight="48.0" fitWidth="71.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                      <image>

@@ -2,8 +2,6 @@ package jordanarocha.Controllers;
 
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
 import jordanarocha.Tabelas.Atributo;
 
 public class CRUDAtributo {

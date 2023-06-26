@@ -2,14 +2,18 @@ package jordanarocha.Controllers;
 
 import com.jfoenix.controls.JFXTextField;
 import java.io.ByteArrayInputStream;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.util.converter.IntegerStringConverter;
 import jordanarocha.Models.JoalheriaDAO;
+import jordanarocha.Tabelas.Venda;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
@@ -200,5 +204,23 @@ public class Formatacao {
         ByteArrayInputStream bis = new ByteArrayInputStream(byteData);
         Image image = new Image(bis);
         return image;
+    }
+
+    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //Formata a célula da data da Venda
+    public static TableCell<Venda, Timestamp> formatDateCell() {
+        return new TableCell<Venda, Timestamp>() {
+            private SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
+            @Override
+            protected void updateItem(Timestamp item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(format.format(item));
+                }
+            }
+        };
     }
 }

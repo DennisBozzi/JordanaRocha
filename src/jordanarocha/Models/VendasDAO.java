@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import jordanarocha.Tabelas.*;
 
 public class VendasDAO {
@@ -73,61 +75,114 @@ public class VendasDAO {
             e.printStackTrace();
         }
     }
-    
-    // Método para ler e armazenar dados das vendas
-public List<Venda> getVendas() {
-    List<Venda> vendas = new ArrayList<>();
-    String sql = "SELECT * FROM vendas";
 
-    try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-        ResultSet resultSet = preparedStatement.executeQuery();
+    //Método que retorna uma Venda completa - Com nome de Vendedor e Cliente
+    public ObservableList<Venda> getVendas() {
+        ObservableList<Venda> vendas = FXCollections.observableArrayList();
+        String sql = "SELECT v.*, ve.nome_vendedor as nomeVendedor, c.nome_cliente as nomeCliente FROM vendas v "
+                + "JOIN vendedor ve ON v.id_vendedor = ve.id_vendedor "
+                + "JOIN clientes c ON v.id_cliente = c.id_cliente";
 
-        while (resultSet.next()) {
-            Venda venda = new Venda();
-            venda.setIdVendas(resultSet.getInt("idVendas"));
-            venda.setIdVendedor(resultSet.getInt("id_vendedor"));
-            venda.setIdCliente(resultSet.getInt("id_cliente"));
-            venda.setValorTotal(resultSet.getDouble("valorTotal"));
-            venda.setFormaPagamento(resultSet.getString("formaPagamento"));
-            venda.setDataVenda(resultSet.getTimestamp("dataVenda"));
-            venda.setComissaoVenda(resultSet.getDouble("comissaoVenda"));
+        try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-            vendas.add(venda);
+            while (resultSet.next()) {
+                Venda venda = new Venda(
+                        resultSet.getInt("idVendas"),
+                        resultSet.getInt("id_vendedor"),
+                        resultSet.getInt("id_cliente"),
+                        resultSet.getDouble("valorTotal"),
+                        resultSet.getString("formaPagamento"),
+                        resultSet.getTimestamp("dataVenda"),
+                        resultSet.getDouble("comissaoVenda"),
+                        resultSet.getString("nomeVendedor"),
+                        resultSet.getString("nomeCliente")
+                );
+
+                vendas.add(venda);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
+
+        return vendas;
     }
 
-    return vendas;
-}
+    // Método para ler e armazenar dados dos produtos vendidos
+    public List<Produto> getProdutosVendidos(int idVenda) {
+        List<Produto> produtos = new ArrayList<>();
+        String sql = "SELECT produto.* FROM vendas_produto JOIN produto ON vendas_produto.idProduto = produto.idProduto WHERE vendas_produto.idVendas = ?";
 
-// Método para ler e armazenar dados dos produtos vendidos
-public List<Produto> getProdutosVendidos(int idVenda) {
-    List<Produto> produtos = new ArrayList<>();
-    String sql = "SELECT produto.* FROM vendas_produto JOIN produto ON vendas_produto.idProduto = produto.idProduto WHERE vendas_produto.idVendas = ?";
+        try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, idVenda);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-    try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-        preparedStatement.setInt(1, idVenda);
-        ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Produto produto = new Produto();
+                produto.setIdProduto(resultSet.getInt("idProduto"));
+                produto.setNomeProduto(resultSet.getString("nomeProduto"));
+                produto.setValorProduto(resultSet.getDouble("valorProduto"));
+                produto.setAcessorioProduto(resultSet.getString("acessorioProduto"));
+                produto.setLigaProduto(resultSet.getString("ligaProduto"));
+                produto.setPedraProduto(resultSet.getString("pedraProduto"));
+                produto.setTamanhoProduto(resultSet.getString("tamanhoProduto"));
+                produto.setFotoProduto(resultSet.getBytes("fotoProduto"));
 
-        while (resultSet.next()) {
-            Produto produto = new Produto();
-            produto.setIdProduto(resultSet.getInt("idProduto"));
-            produto.setNomeProduto(resultSet.getString("nomeProduto"));
-            produto.setValorProduto(resultSet.getDouble("valorProduto"));
-            produto.setAcessorioProduto(resultSet.getString("acessorioProduto"));
-            produto.setLigaProduto(resultSet.getString("ligaProduto"));
-            produto.setPedraProduto(resultSet.getString("pedraProduto"));
-            produto.setTamanhoProduto(resultSet.getString("tamanhoProduto"));
-            produto.setFotoProduto(resultSet.getBytes("fotoProduto"));
-
-            produtos.add(produto);
+                produtos.add(produto);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
+
+        return produtos;
     }
 
-    return produtos;
-}
+    // Método para deletar uma venda
+    public void deleteVenda(int idVendas) {
+        String sqlVendasProduto = "DELETE FROM vendas_produto WHERE idVendas = ?";
+        String sqlVendas = "DELETE FROM vendas WHERE idVendas = ?";
+
+        Connection connection = null;
+
+        try {
+            connection = getConnection();
+
+            // Inicia uma transação
+            connection.setAutoCommit(false);
+
+            // Deleta os registros relacionados na tabela vendas_produto
+            PreparedStatement preparedStatementVendasProduto = connection.prepareStatement(sqlVendasProduto);
+            preparedStatementVendasProduto.setInt(1, idVendas);
+            preparedStatementVendasProduto.executeUpdate();
+
+            // Deleta a venda na tabela vendas
+            PreparedStatement preparedStatementVendas = connection.prepareStatement(sqlVendas);
+            preparedStatementVendas.setInt(1, idVendas);
+            preparedStatementVendas.executeUpdate();
+
+            // Commit da transação
+            connection.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            if (connection != null) {
+                try {
+                    System.err.println("A transação está sendo revertida");
+                    connection.rollback();
+                } catch (SQLException excep) {
+                    excep.printStackTrace();
+                }
+            }
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.setAutoCommit(true);
+                    connection.close();
+                } catch (SQLException excep) {
+                    excep.printStackTrace();
+                }
+            }
+        }
+    }
 
 }

@@ -32,11 +32,6 @@
     -fx-border-color: none;
 }
 
-
-#colunaIDAtributo, #colunaNomeAtributo, #colunaValorAtributo {
-    -fx-alignment: CENTER;
-}
-
 .table-view:focused .table-row-cell:selected {
     -fx-text-fill:  white;
     -fx-background-color: #095742;
@@ -48,8 +43,11 @@
     -fx-alignment: CENTER;
 }
 
-#colunaCelularCliente, #colunaEmailCliente, #colunaEnderecoCliente, #colunaCPFCliente, #colunaNomeCliente {
+#colunaCelularCliente, #colunaEmailCliente, #colunaEnderecoCliente, #colunaCPFCliente, #colunaNomeCliente, #colunaIDVendedor, #colunaNomeVendedor, #colunaCPFVendedor, #colunaCelularVendedor, #colunaStatusVendedor,
+#colunaIdProdutos, #colunaFotoProdutos, #colunaJoiaProdutos, #colunaAcessorioProdutos, #colunaLigaProdutos, #colunaValorProdutos, #colunaEscolheId, #colunaEscolheNome, #colunaEscolheFoto, #colunaEscolheValor,
+#colunaIDAtributo, #colunaNomeAtributo, #colunaValorAtributo, #colunaIdVenda, #colunaCompradorVenda, #colunaVendedorVenda, #colunaDataVenda, #colunaValorVenda{
     -fx-alignment: CENTER;
+    -fx-border-width: 0;
 }
 
 .table-view .scroll-bar:horizontal > .increment-button,
@@ -68,14 +66,6 @@
     -fx-padding: 0;
     -fx-margin:0;
     display: none;
-}
-
-#colunaIDVendedor, #colunaNomeVendedor, #colunaCPFVendedor, #colunaCelularVendedor, #colunaStatusVendedor{
-    -fx-alignment: CENTER;
-}
-
-#colunaIdProdutos, #colunaFotoProdutos, #colunaJoiaProdutos, #colunaAcessorioProdutos, #colunaLigaProdutos, #colunaValorProdutos {
-    -fx-alignment: CENTER;
 }
 
 #colunaStatusVendedor {
@@ -125,11 +115,6 @@
 
 .comboboxEdicaoProduto .list-view .list-cell:hover {
     -fx-background-color: #09574280;
-}
-
-/*Tabela escolha produtos*/
-#colunaEscolheId, #colunaEscolheNome, #colunaEscolheFoto, #colunaEscolheValor {
-    -fx-alignment: CENTER;
 }
 
 #tabelaEscolhaProduto .column-header > .label {

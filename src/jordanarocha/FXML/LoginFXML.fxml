@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="560.0" prefWidth="360.0" style="-fx-background-color: FFF8ED;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jordanarocha.Controllers.LoginController">
+<AnchorPane id="AnchorPane" prefHeight="560.0" prefWidth="360.0" style="-fx-background-color: FFF8ED;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jordanarocha.Controllers.LoginController">
    <children>
       <Label alignment="CENTER" layoutX="64.0" layoutY="79.0" style="-fx-font-family: Kumbh Sans; -fx-font-weight: lighter;" text="Jordana Rocha" AnchorPane.leftAnchor="64.0" AnchorPane.rightAnchor="63.0" AnchorPane.topAnchor="79.0">
          <font>
@@ -25,7 +25,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXPasswordField>
-      <JFXButton layoutX="136.0" layoutY="348.0" onAction="#CadastroVendedor" text="Novo Usuário" textAlignment="CENTER" textFill="#095742" underline="true" AnchorPane.leftAnchor="136.0" AnchorPane.rightAnchor="135.0">
+      <JFXButton layoutX="114.0" layoutY="348.0" onAction="#CadastroVendedor" prefHeight="25.0" prefWidth="133.0" text="Painel Administrador" textAlignment="CENTER" textFill="#095742" underline="true" AnchorPane.leftAnchor="114.0" AnchorPane.rightAnchor="113.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

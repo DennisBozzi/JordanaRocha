@@ -11,11 +11,13 @@ public class Venda {
     private String formaPagamento;
     private Timestamp dataVenda;
     private double comissaoVenda;
+    private String nomeVendedor;
+    private String nomeCliente;
 
-    public Venda(){
-        
+    public Venda() {
+
     }
-    
+
     public Venda(int idVendas, int idVendedor, int idCliente, double valorTotal, String formaPagamento, Timestamp dataVenda, double comissaoVenda) {
         this.idVendas = idVendas;
         this.idVendedor = idVendedor;
@@ -24,6 +26,18 @@ public class Venda {
         this.formaPagamento = formaPagamento;
         this.dataVenda = dataVenda;
         this.comissaoVenda = comissaoVenda;
+    }
+
+    public Venda(int idVendas, int idVendedor, int idCliente, double valorTotal, String formaPagamento, Timestamp dataVenda, double comissaoVenda, String nomeVendedor, String nomeCliente) {
+        this.idVendas = idVendas;
+        this.idVendedor = idVendedor;
+        this.idCliente = idCliente;
+        this.valorTotal = valorTotal;
+        this.formaPagamento = formaPagamento;
+        this.dataVenda = dataVenda;
+        this.comissaoVenda = comissaoVenda;
+        this.nomeVendedor = nomeVendedor;
+        this.nomeCliente = nomeCliente;
     }
 
     public int getIdVendas() {
@@ -82,9 +96,25 @@ public class Venda {
         this.comissaoVenda = comissaoVenda;
     }
 
+    public String getNomeVendedor() {
+        return nomeVendedor;
+    }
+
+    public void setNomeVendedor(String nomeVendedor) {
+        this.nomeVendedor = nomeVendedor;
+    }
+
+    public String getNomeCliente() {
+        return nomeCliente;
+    }
+
+    public void setNomeCliente(String nomeCliente) {
+        this.nomeCliente = nomeCliente;
+    }
+
     @Override
     public String toString() {
-        return "Venda{" + "idVendas=" + idVendas + ", idVendedor=" + idVendedor + ", idCliente=" + idCliente + ", valorTotal=" + valorTotal + ", formaPagamento=" + formaPagamento + ", dataVenda=" + dataVenda + ", comissaoVenda=" + comissaoVenda + '}';
+        return "Venda{" + "idVendas=" + idVendas + ", idVendedor=" + idVendedor + ", idCliente=" + idCliente + ", valorTotal=" + valorTotal + ", formaPagamento=" + formaPagamento + ", dataVenda=" + dataVenda + ", comissaoVenda=" + comissaoVenda + ", nomeVendedor=" + nomeVendedor + ", nomeCliente=" + nomeCliente + '}';
     }
 
 }
