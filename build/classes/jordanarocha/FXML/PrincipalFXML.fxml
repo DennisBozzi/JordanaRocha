@@ -23,8 +23,33 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: FFF8ED;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jordanarocha.Controllers.PrincipalController">
+<AnchorPane id="AnchorPane" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: FFF8ED;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jordanarocha.Controllers.PrincipalController">
     <children>
+      <Pane fx:id="modalConfirmaApagarVenda" layoutX="625.0" layoutY="325.0" prefHeight="250.0" prefWidth="350.0" style="-fx-background-color: #095742; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: FFFFFF;" visible="false">
+         <children>
+            <JFXButton layoutX="76.0" layoutY="166.0" onAction="#apagarVendas" style="-fx-background-color: #FFFFFF25;" text="Sim" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton layoutX="212.0" layoutY="166.0" onAction="#fecharConfirmaExcluirVenda" style="-fx-background-color: #FFFFFF25;" text="Não" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <Label layoutX="73.0" layoutY="82.0" text="Deseja excluir a venda?" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
       <Pane fx:id="modalFormaDePagamento" layoutX="635.0" layoutY="200.0" prefHeight="494.0" prefWidth="350.0" style="-fx-background-color: #095742; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: FFFFFF;" visible="false">
          <children>
             <JFXButton contentDisplay="CENTER" layoutX="300.0" layoutY="6.0" onAction="#fechaOpcoesDePagamento" prefHeight="44.0" prefWidth="43.0" ripplerFill="#095742" style="-fx-background-radius: 0;" styleClass="botaoExcluirCliente" stylesheets="@../Styles/style.css" textFill="WHITE">
@@ -294,31 +319,6 @@
             <Label fx:id="valorModalVenda" alignment="CENTER" layoutX="266.0" layoutY="676.0" prefHeight="27.0" prefWidth="169.0" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
-      <Pane fx:id="modalConfirmaApagarVenda" layoutX="625.0" layoutY="325.0" prefHeight="250.0" prefWidth="350.0" style="-fx-background-color: #095742; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: FFFFFF;" visible="false">
-         <children>
-            <JFXButton layoutX="76.0" layoutY="166.0" onAction="#apagarVendas" style="-fx-background-color: #FFFFFF25;" text="Sim" textFill="WHITE">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </JFXButton>
-            <JFXButton layoutX="212.0" layoutY="166.0" onAction="#fecharConfirmaExcluirVenda" style="-fx-background-color: #FFFFFF25;" text="Não" textFill="WHITE">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </JFXButton>
-            <Label layoutX="73.0" layoutY="95.0" text="Deseja excluir a venda?" textFill="WHITE">
-               <font>
-                  <Font size="20.0" />
                </font>
             </Label>
          </children>
