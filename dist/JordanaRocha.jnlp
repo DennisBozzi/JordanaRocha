@@ -8,21 +8,11 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="JordanaRocha.jar" size="6773754" download="eager" />
+    <jar href="JordanaRocha.jar" size="6777173" download="eager" />
     <jar href="lib\commons-lang3-3.12.0.jar" size="587402" download="eager" />
-    <jar href="lib\controlsfx-8.40.14-javadoc.jar" size="2730196" download="eager" />
     <jar href="lib\controlsfx-8.40.14.jar" size="1215643" download="eager" />
-    <jar href="lib\javafx-swt.jar" size="37119" download="eager" />
-    <jar href="lib\javafx.base.jar" size="755034" download="eager" />
-    <jar href="lib\javafx.controls.jar" size="2577980" download="eager" />
-    <jar href="lib\javafx.fxml.jar" size="130174" download="eager" />
-    <jar href="lib\javafx.graphics.jar" size="4272241" download="eager" />
-    <jar href="lib\javafx.media.jar" size="278548" download="eager" />
-    <jar href="lib\javafx.swing.jar" size="89685" download="eager" />
-    <jar href="lib\javafx.web.jar" size="727747" download="eager" />
     <jar href="lib\jfoenix-8.0.10.jar" size="2710207" download="eager" />
     <jar href="lib\mysql-connector-j-8.0.32.jar" size="2480823" download="eager" />
-    <jar href="lib\rhino-1.7.13.jar" size="1315838" download="eager" />
   </resources>
   <jfx:javafx-desc  width="800" height="600" main-class="jordanarocha.App"  name="JordanaRocha" />
   <update check="always"/>

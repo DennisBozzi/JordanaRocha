@@ -1,9 +1,11 @@
 package jordanarocha.Controllers;
 
 import com.jfoenix.controls.*;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.*;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.util.*;
@@ -57,25 +59,26 @@ public class PrincipalController implements Initializable {
 
     @FXML
     private Label cpfJaExiste, cpfEInvalido, labelProdutos, labelClientes, labelVendas, headerConfirmaExcluir, labelConfirmaAtualizado, labelMensagem, bodyConfirmaExcluir, labelAtributo, labelProduto, labelAtualizaProduto,
-            nomeVendedorLogado, cargoUsuario, nenhumProduto, produtoEscolhido, labelValorTotal, labelComissao, camposNulosLabel, camposNulosLabel2, valorModalVenda;
+            nomeVendedorLogado, cargoUsuario, nenhumProduto, produtoEscolhido, labelValorTotal, labelComissao, camposNulosLabel, camposNulosLabel2, valorModalVenda, labelClienteReferenciado;
 
     @FXML
-    private TableColumn<Cliente, String> colunaNomeCliente, colunaCPFCliente, colunaEnderecoCliente, colunaEmailCliente, colunaCelularCliente;
+    private TableColumn<Cliente, String> colunaNomeCliente, colunaCPFCliente, colunaEnderecoCliente, colunaEmailCliente, colunaCelularCliente, recenteIdCliente, recenteNomeCliente, recenteCpfCliente;
 
     @FXML
-    private TableColumn<Produto, String> colunaIdProdutos, colunaJoiaProdutos, colunaLigaProdutos, colunaAcessorioProdutos, colunaEscolheId, colunaEscolheNome, carrinhoId, carrinhoNome, colunaNomeModal;
+    private TableColumn<Produto, String> colunaIdProdutos, colunaJoiaProdutos, colunaLigaProdutos, colunaAcessorioProdutos, colunaEscolheId, colunaEscolheNome, carrinhoId, carrinhoNome, colunaNomeModal, recenteNomeProduto,
+            recenteIdProduto;
 
     @FXML
-    private TableColumn<Venda, String> colunaIdVenda, colunaCompradorVenda, colunaVendedorVenda;
+    private TableColumn<Venda, String> colunaIdVenda, colunaCompradorVenda, colunaVendedorVenda, recenteIdVenda, recenteCompradorVenda;
 
     @FXML
     private TableColumn<Venda, Timestamp> colunaDataVenda;
 
     @FXML
-    private TableColumn<Produto, Double> colunaValorProdutos, colunaEscolheValor, carrinhoValor, colunaValorVenda, colunaValorModal;
+    private TableColumn<Produto, Double> colunaValorProdutos, colunaEscolheValor, carrinhoValor, colunaValorVenda, colunaValorModal, recenteValorVenda;
 
     @FXML
-    private TableColumn<Produto, byte[]> colunaFotoProdutos, colunaEscolheFoto, carrinhoFoto, colunaImagemModal;
+    private TableColumn<Produto, byte[]> colunaFotoProdutos, colunaEscolheFoto, carrinhoFoto, colunaImagemModal, recenteFotoProduto;
 
     @FXML
     private JFXComboBox<String> comboAcessorio, comboLiga, comboPedra, comboTamanho, comboAtualizaAcessorio, comboAtualizaPedra, comboAtualizaLiga, comboAtualizaTamanho;
@@ -99,13 +102,13 @@ public class PrincipalController implements Initializable {
     private ImageView imagemTemporaria, imagemAtualizaProduto, imagemVendedorLogado;
 
     @FXML
-    private TableView<Produto> tabelaProdutos, tabelaEscolhaProduto, tabelaCarrinho, tabelaModal;
+    private TableView<Produto> tabelaProdutos, tabelaEscolhaProduto, tabelaCarrinho, tabelaModal, tabelaProdutosRecentes;
 
     @FXML
-    private TableView<Cliente> tabelaClientes;
+    private TableView<Cliente> tabelaClientes, tabelaClientesRecentes;
 
     @FXML
-    private TableView<Venda> tabelaVendas;
+    private TableView<Venda> tabelaVendas, tabelaVendasRecentes;
 
     @FXML
     private JFXDialogLayout dialogConfirmaExluir;
@@ -220,6 +223,7 @@ public class PrincipalController implements Initializable {
     //Métodos que irão nos botoes pára alternar os panes
     public void TrocaPaneComeco(ActionEvent event) {
         tela.TrocaPane("comeco");
+        atualizaTabelasInicio();
     }
 
     public void TrocaPaneVender(ActionEvent event) {
@@ -325,13 +329,25 @@ public class PrincipalController implements Initializable {
 
         if (arquivoSelecionado != null) {
             try {
-                BufferedImage bufferedImage = ImageIO.read(arquivoSelecionado);
-                ByteArrayOutputStream byteOutput = new ByteArrayOutputStream();
-                ImageIO.write(bufferedImage, "png", byteOutput);
-                imagemBytes = byteOutput.toByteArray();
+                BufferedImage originalImage = ImageIO.read(arquivoSelecionado);
 
-                Image imagem = new Image(arquivoSelecionado.toURI().toString());
+                // Redimensionando para 94x94 sem cortar
+                java.awt.Image tmp = originalImage.getScaledInstance(94, 94, java.awt.Image.SCALE_SMOOTH);
+                BufferedImage resizedImage = new BufferedImage(94, 94, BufferedImage.TYPE_INT_ARGB);
+                Graphics2D g2d = resizedImage.createGraphics();
+                g2d.drawImage(tmp, 0, 0, null);
+                g2d.dispose();
+
+                //Convertendo a imagem redimensionada para um array de bytes
+                ByteArrayOutputStream byteOutput = new ByteArrayOutputStream();
+                ImageIO.write(resizedImage, "png", byteOutput);
+                byte[] imagemBytes = byteOutput.toByteArray();
+
+                //Convertendo a imagem redimensionada para um objeto Image do JavaFX
+                ByteArrayInputStream byteInput = new ByteArrayInputStream(imagemBytes);
+                Image imagem = new Image(byteInput);
                 imagemTemporaria.setImage(imagem);
+
             } catch (IOException e) {
                 System.out.println("Erro ao converter imagem: " + e.getMessage());
             }
@@ -706,12 +722,23 @@ public class PrincipalController implements Initializable {
 
         if (arquivoSelecionado != null) {
             try {
-                BufferedImage bufferedImage = ImageIO.read(arquivoSelecionado);
-                ByteArrayOutputStream byteOutput = new ByteArrayOutputStream();
-                ImageIO.write(bufferedImage, "png", byteOutput);
-                imagemBytes = byteOutput.toByteArray();
+                BufferedImage originalImage = ImageIO.read(arquivoSelecionado);
 
-                Image imagem = new Image(arquivoSelecionado.toURI().toString());
+                // Redimensionando para 94x94 sem cortar
+                java.awt.Image tmp = originalImage.getScaledInstance(94, 94, java.awt.Image.SCALE_SMOOTH);
+                BufferedImage resizedImage = new BufferedImage(94, 94, BufferedImage.TYPE_INT_ARGB);
+                Graphics2D g2d = resizedImage.createGraphics();
+                g2d.drawImage(tmp, 0, 0, null);
+                g2d.dispose();
+
+                //Convertendo a imagem recortada e redimensionada para um array de bytes
+                ByteArrayOutputStream byteOutput = new ByteArrayOutputStream();
+                ImageIO.write(resizedImage, "png", byteOutput);
+                byte[] imagemBytes = byteOutput.toByteArray();
+
+                //Convertendo a imagem recortada e redimensionada para um objeto Image do JavaFX
+                ByteArrayInputStream byteInput = new ByteArrayInputStream(imagemBytes);
+                Image imagem = new Image(byteInput);
                 imagemAtualizaProduto.setImage(imagem);
 
                 Produto atualizaFoto = new Produto(produtoSelecionado.getIdProduto(), imagemBytes);
@@ -815,6 +842,9 @@ public class PrincipalController implements Initializable {
 
         // Define a lista de itens da tabela como a lista de clientes filtrados
         tabelaClientes.setItems(clientesFiltrados);
+
+        //Autocomplete Nome e CPF da tela de Venda
+        formatacao.autocompleteCPF(autocompleteCPF, autocompleteNome);
     }
 
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -847,18 +877,25 @@ public class PrincipalController implements Initializable {
 
     //Esse método é o delte do cruD
     @FXML
-    void excluirCliente(ActionEvent event) {
+    void excluirCliente(ActionEvent event) throws SQLException {
         //Código que identifica a linha selecionada na tabela
         Cliente clienteSelecionado = tabelaClientes.getSelectionModel().getSelectedItem();
 
         //Dando um get no CPF da linha selecionada
         String cpf = clienteSelecionado.getCpf();
 
-        //Excluindo com o parametro do cpf sendo passado
-        joalheriaDao.excluirCliente(cpf);
+        //Dando um get no Id da linha selecionada
+        int id = clienteSelecionado.getId();
 
-        //Método para atualizar a tabela após excluir
-        atualizaClientes();
+        if (!joalheriaDao.clienteTemVendas(id)) {
+            //Excluindo com o parametro do cpf sendo passado
+            joalheriaDao.excluirCliente(cpf);
+
+            //Método para atualizar a tabela após excluir
+            atualizaClientes();
+        } else {
+            fadeLabelConfirmaAtualizado(labelClienteReferenciado);
+        }
 
         //Método para fechar o dialog (modal)
         fecharConfirmExcluirCliente();
@@ -1345,6 +1382,74 @@ public class PrincipalController implements Initializable {
 
     }
 
+    //----------------------------------------------------------------------------- Tela de Início ------------------------------------------------------------------------------------------
+    public void atualizaTabelasInicio() {
+
+        // -------------------------------- Populando Clientes
+        //Observable List que recebe o getProdutos, ou seja, recebe todos os produtos do DB
+        ObservableList<Produto> produtos = produtosDAO.getProdutos();
+
+        recenteIdProduto.setCellValueFactory(new PropertyValueFactory<>("idProduto"));
+        recenteNomeProduto.setCellValueFactory(new PropertyValueFactory<>("nomeProduto"));
+        recenteFotoProduto.setCellValueFactory(new PropertyValueFactory<>("fotoProduto"));
+
+        //"Formatando" a coluna de imagem para ela aparecer em uma imageView
+        recenteFotoProduto.setCellFactory(param -> new ImageTableCell());
+
+        //"Formatando" para aparecer apenas o primeio nome
+        formatacao.primeiroNomeNaColuna(recenteNomeProduto);
+
+        // Define a lista de itens da tabela que será listado
+        tabelaProdutosRecentes.setItems(produtos);
+
+        // -------------------------------- Populando Clientes
+        //Observable List que recebe o getClientes, ou seja recebe todos os clientes do DB
+        ObservableList<Cliente> clientes = joalheriaDao.getClientes();
+
+        recenteIdCliente.setCellValueFactory(new PropertyValueFactory<>("id"));
+        recenteNomeCliente.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        recenteCpfCliente.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+
+        //"Formatando" para aparecer apenas o primeio nome
+        formatacao.primeiroNomeNaColuna(recenteNomeCliente);
+
+        // Define a lista de itens da tabela que será listado
+        tabelaClientesRecentes.setItems(clientes);
+
+        // -------------------------------- Populando Vendas
+        //Observable List que recebe o getVendas, ou seja, recebe todos as Vendas do BD
+        ObservableList<Venda> vendas = vendasDAO.getVendas();
+
+        recenteIdVenda.setCellValueFactory(new PropertyValueFactory<>("idVendas"));
+        recenteCompradorVenda.setCellValueFactory(new PropertyValueFactory<>("nomeCliente"));
+        recenteValorVenda.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
+
+        //Formatando a coluna de valor para aparecer R$#.###.###,##
+        recenteValorVenda.setCellFactory(new FormattedCurrencyCellFactory());
+
+        //"Formatando" para aparecer apenas o primeio nome
+        formatacao.primeiroNomeNaColuna(recenteCompradorVenda);
+
+        // Define a lista de itens da tabela que será listado
+        tabelaVendasRecentes.setItems(vendas);
+
+    }
+
+    public void vendasInicio() {
+        tela.TrocaPane("relatorios");
+        tabela.trocaTabela("vendas");
+    }
+
+    public void produtosInicio() {
+        tela.TrocaPane("relatorios");
+        tabela.trocaTabela("produtos");
+    }
+
+    public void clientesInicio() {
+        tela.TrocaPane("relatorios");
+        tabela.trocaTabela("clientes");
+    }
+
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //Initialize
     @Override
@@ -1381,6 +1486,7 @@ public class PrincipalController implements Initializable {
         atualizaClientes();
         atualizaProdutos();
         atualizaVendas();
+        atualizaTabelasInicio();
         limparCarrinho();
     }
 

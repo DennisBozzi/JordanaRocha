@@ -45,7 +45,8 @@
 
 #colunaCelularCliente, #colunaEmailCliente, #colunaEnderecoCliente, #colunaCPFCliente, #colunaNomeCliente, #colunaIDVendedor, #colunaNomeVendedor, #colunaCPFVendedor, #colunaCelularVendedor, #colunaStatusVendedor,
 #colunaIdProdutos, #colunaFotoProdutos, #colunaJoiaProdutos, #colunaAcessorioProdutos, #colunaLigaProdutos, #colunaValorProdutos, #colunaEscolheId, #colunaEscolheNome, #colunaEscolheFoto, #colunaEscolheValor,
-#colunaIDAtributo, #colunaNomeAtributo, #colunaValorAtributo, #colunaIdVenda, #colunaCompradorVenda, #colunaVendedorVenda, #colunaDataVenda, #colunaValorVenda, #colunaImagemModal, #colunaNomeModal, #colunaValorModal{
+#colunaIDAtributo, #colunaNomeAtributo, #colunaValorAtributo, #colunaIdVenda, #colunaCompradorVenda, #colunaVendedorVenda, #colunaDataVenda, #colunaValorVenda, #colunaImagemModal, #colunaNomeModal, #colunaValorModal,
+#recenteIdVenda, #recenteCompradorVenda, #recenteValorVenda, #recenteIdProduto, #recenteNomeProduto, #recenteFotoProduto, #recenteIdCliente, #recenteNomeCliente, #recenteCpfCliente{
     -fx-alignment: CENTER;
     -fx-border-width: 0;
 }
@@ -200,5 +201,62 @@
 
 #tabelaModal:focused .table-row-cell:selected{
     -fx-background-color: #FFFFFF20;
+}
+
+/* --- */
+
+#tabelaClientesRecentes .column-header > .label,
+#tabelaVendasRecentes .column-header > .label,
+#tabelaProdutosRecentes .column-header > .label{
+    -fx-text-fill:  #FFFFFF;
+    -fx-background-color: #095742;
+    -fx-border-width: 0;
+}
+
+#tabelaClientesRecentes .column-header,
+#tabelaVendasRecentes .column-header,
+#tabelaProdutosRecentes .column-header{
+    -fx-background-color: #095742;
+    -fx-border-width: 0;
+}
+
+#tabelaClientesRecentes,
+#tabelaVendasRecentes,
+#tabelaProdutosRecentes{
+    -fx-border-width: 1;
+    -fx-border-color: none;
+    -fx-background-color: transparent;
+}
+
+#tabelaClientesRecentes .column-header > .label,
+#tabelaVendasRecentes .column-header > .label,
+#tabelaProdutosRecentes .column-header > .label{
+    -fx-text-fill:  #FFFFFF;
+    -fx-border-color: #FFFFFF;
+    -fx-border-width: 0;
+}
+
+#tabelaClientesRecentes .table-cell,
+#tabelaVendasRecentes .table-cell,
+#tabelaProdutosRecentes .table-cell{
+    -fx-text-fill: #FFFFFF;
+}
+
+#tabelaClientesRecentes .table-row-cell,
+#tabelaVendasRecentes .table-row-cell,
+#tabelaProdutosRecentes .table-row-cell {
+    -fx-background-color: #095742;
+}
+
+#tabelaClientesRecentes .table-cell:focused .table-row-cell:selected .table-cell,
+#tabelaVendasRecentes .table-cell:focused .table-row-cell:selected .table-cell,
+#tabelaProdutosRecentes .table-cell:focused .table-row-cell:selected .table-cell{
+    -fx-text-fill: #FFFFFF;
+}
+
+#tabelaClientesRecentes:focused .table-row-cell:selected,
+#tabelaVendasRecentes:focused .table-row-cell:selected,
+#tabelaProdutosRecentes:focused .table-row-cell:selected{
+    -fx-background-color: #09574280;
 }
 

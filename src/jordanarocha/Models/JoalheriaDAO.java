@@ -93,16 +93,17 @@ public class JoalheriaDAO {
     public ObservableList<Cliente> getClientes() {
         ObservableList<Cliente> clientes = FXCollections.observableArrayList();
 
-        try (Connection connection = getConnection(); Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery("SELECT nome_cliente, cpf_cliente, email_cliente, telefone_cliente, endereco_cliente, observacao_cliente FROM clientes")) {
+        try (Connection connection = getConnection(); Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery("SELECT id_cliente, nome_cliente, cpf_cliente, email_cliente, telefone_cliente, endereco_cliente, observacao_cliente FROM clientes")) {
 
             while (rs.next()) {
+                int id = rs.getInt("id_cliente");
                 String nome = rs.getString("nome_cliente");
                 String cpf = rs.getString("cpf_cliente");
                 String email = rs.getString("email_cliente");
                 String celular = rs.getString("telefone_cliente");
                 String endereco = rs.getString("endereco_cliente");
                 String observacao = rs.getString("observacao_cliente");
-                clientes.add(new Cliente(nome, cpf, email, celular, endereco, observacao));
+                clientes.add(new Cliente(id, nome, cpf, email, celular, endereco, observacao));
             }
 
         } catch (SQLException ex) {
@@ -277,6 +278,24 @@ public class JoalheriaDAO {
         }
 
         return id;
+    }
+
+    //Método que confere se o cliente está associado a alguma venda
+    public boolean clienteTemVendas(int idCliente) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM vendas WHERE id_cliente = ?";
+
+        try (Connection connection = getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, idCliente);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int count = rs.getInt(1);
+                    return count > 0;
+                } else {
+                    return false;
+                }
+            }
+        }
     }
 
 }

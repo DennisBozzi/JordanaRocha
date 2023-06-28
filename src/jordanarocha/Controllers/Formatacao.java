@@ -8,11 +8,13 @@ import java.util.Arrays;
 import java.util.List;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.util.converter.IntegerStringConverter;
 import jordanarocha.Models.JoalheriaDAO;
+import jordanarocha.Tabelas.Produto;
 import jordanarocha.Tabelas.Venda;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
@@ -222,5 +224,27 @@ public class Formatacao {
                 }
             }
         };
+    }
+
+    //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //Formatando para aparecer primeiro nome na coluna
+    public <T> void primeiroNomeNaColuna(TableColumn<T, String> column) {
+        column.setCellFactory(tc -> new TableCell<T, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    // Atualize a célula com apenas o primeiro nome
+                    setText(getFirstName(item));
+                }
+            }
+        });
+    }
+
+    public String getFirstName(String fullName) {
+        return fullName.split(" ")[0];
     }
 }

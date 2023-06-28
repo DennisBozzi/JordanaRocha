@@ -23,7 +23,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: FFF8ED;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jordanarocha.Controllers.PrincipalController">
+<AnchorPane id="AnchorPane" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: FFF8ED;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jordanarocha.Controllers.PrincipalController">
     <children>
       <Pane fx:id="modalConfirmaApagarVenda" layoutX="625.0" layoutY="325.0" prefHeight="250.0" prefWidth="350.0" style="-fx-background-color: #095742; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: FFFFFF;" visible="false">
          <children>
@@ -586,11 +586,86 @@
         </Pane>
         <Pane fx:id="paneComeco" layoutX="280.0" prefHeight="900.0" prefWidth="1320.0" visible="false">
             <children>
-                <Label alignment="CENTER" ellipsisString="" layoutX="549.0" layoutY="107.0" text="Bem Vindo">
+                <Label alignment="CENTER" ellipsisString="" layoutX="549.0" layoutY="75.0" text="Bem Vindo">
                     <font>
                         <Font name="Segoe UI Light" size="48.0" />
                     </font>
                 </Label>
+            <TableView fx:id="tabelaVendasRecentes" layoutX="160.0" layoutY="277.0" prefHeight="501.0" prefWidth="250.0" stylesheets="@../Styles/style.css">
+              <columns>
+                <TableColumn fx:id="recenteIdVenda" prefWidth="50.0" text="#" />
+                <TableColumn fx:id="recenteCompradorVenda" prefWidth="100.0" text="Comprador" />
+                  <TableColumn fx:id="recenteValorVenda" prefWidth="100.0" text="Valor Total" />
+              </columns>
+            </TableView>
+            <TableView fx:id="tabelaProdutosRecentes" layoutX="533.0" layoutY="277.0" prefHeight="494.0" prefWidth="250.0" stylesheets="@../Styles/style.css">
+               <columns>
+                  <TableColumn fx:id="recenteIdProduto" prefWidth="50.0" text="#" />
+                  <TableColumn fx:id="recenteNomeProduto" prefWidth="100.0" text="Nome" />
+                  <TableColumn fx:id="recenteFotoProduto" prefWidth="100.0" text="Foto" />
+               </columns>
+            </TableView>
+            <TableView fx:id="tabelaClientesRecentes" layoutX="909.0" layoutY="277.0" prefHeight="494.0" prefWidth="250.0" stylesheets="@../Styles/style.css">
+               <columns>
+                  <TableColumn fx:id="recenteIdCliente" prefWidth="50.0" text="#" />
+                  <TableColumn fx:id="recenteNomeCliente" prefWidth="100.0" text="Nome" />
+                  <TableColumn fx:id="recenteCpfCliente" prefWidth="100.0" text="CPF" />
+               </columns>
+            </TableView>
+            <Label alignment="CENTER" ellipsisString="" layoutX="160.0" layoutY="182.0" prefHeight="53.0" prefWidth="252.0" text="Vendas">
+               <font>
+                  <Font name="Segoe UI Light" size="36.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" ellipsisString="" layoutX="158.0" layoutY="224.0" prefHeight="35.0" prefWidth="250.0" text="Recentes" textFill="#095742">
+               <font>
+                  <Font name="Segoe UI Light" size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" ellipsisString="" layoutX="535.0" layoutY="182.0" prefHeight="53.0" prefWidth="250.0" text="Produtos">
+               <font>
+                  <Font name="Segoe UI Light" size="36.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" ellipsisString="" layoutX="533.0" layoutY="224.0" prefHeight="35.0" prefWidth="250.0" text="Recentes" textFill="#095742">
+               <font>
+                  <Font name="Segoe UI Light" size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" ellipsisString="" layoutX="911.0" layoutY="178.0" prefHeight="53.0" prefWidth="250.0" text="Clientes">
+               <font>
+                  <Font name="Segoe UI Light" size="36.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" ellipsisString="" layoutX="907.0" layoutY="220.0" prefHeight="35.0" prefWidth="250.0" text="Recentes" textFill="#095742">
+               <font>
+                  <Font name="Segoe UI Light" size="18.0" />
+               </font>
+            </Label>
+            <JFXButton buttonType="RAISED" layoutX="156.0" layoutY="812.0" onAction="#vendasInicio" prefHeight="25.0" prefWidth="258.0" ripplerFill="WHITE" style="-fx-background-color: #095742;" text="Vendas" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" layoutX="529.0" layoutY="812.0" onAction="#produtosInicio" prefHeight="25.0" prefWidth="258.0" ripplerFill="WHITE" style="-fx-background-color: #095742;" text="Produtos" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" layoutX="907.0" layoutY="812.0" onAction="#clientesInicio" prefHeight="25.0" prefWidth="258.0" ripplerFill="WHITE" style="-fx-background-color: #095742;" text="Clientes" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
             </children>
         </Pane>
         <Pane fx:id="paneVender" layoutX="280.0" prefHeight="900.0" prefWidth="1320.0" stylesheets="@../Styles/style.css" visible="false">
@@ -808,6 +883,11 @@
                </font>
             </JFXTextField>
             <Label fx:id="labelConfirmaAtualizado" layoutX="173.0" layoutY="833.0" text="Atualizado com sucesso!" textFill="#095742" visible="false">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelClienteReferenciado" layoutX="81.0" layoutY="833.0" prefHeight="25.0" prefWidth="294.0" text="Cliente está cadastrado em uma venda." textFill="RED" visible="false">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>

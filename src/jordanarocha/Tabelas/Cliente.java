@@ -2,12 +2,23 @@ package jordanarocha.Tabelas;
 
 public class Cliente {
 
+    private int id;
     private String nome;
     private String cpf;
     private String endereco;
     private String celular;
     private String email;
     private String observacao;
+
+    public Cliente(int id, String nome, String cpf, String endereco, String celular, String email, String observacao) {
+        this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.endereco = endereco;
+        this.celular = celular;
+        this.email = email;
+        this.observacao = observacao;
+    }
 
     public Cliente(String nome, String cpf, String email, String celular, String endereco, String observacao) {
         this.nome = nome;
@@ -17,7 +28,15 @@ public class Cliente {
         this.email = email;
         this.observacao = observacao;
     }
-    
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getNome() {
         return nome;
     }
