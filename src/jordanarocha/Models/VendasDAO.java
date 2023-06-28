@@ -233,4 +233,35 @@ public class VendasDAO {
         return produtosVendidos;
     }
 
+    //Método que retorna as ultimas 10 vendas
+    public ObservableList<Venda> getVendas10() {
+        ObservableList<Venda> vendas = FXCollections.observableArrayList();
+        String sql = "SELECT v.*, ve.nome_vendedor as nomeVendedor, c.nome_cliente as nomeCliente FROM vendas v "
+                + "JOIN vendedor ve ON v.id_vendedor = ve.id_vendedor "
+                + "JOIN clientes c ON v.id_cliente = c.id_cliente ORDER BY v.idVendas DESC LIMIT 10";
+
+        try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Venda venda = new Venda(
+                        resultSet.getInt("idVendas"),
+                        resultSet.getInt("id_vendedor"),
+                        resultSet.getInt("id_cliente"),
+                        resultSet.getDouble("valorTotal"),
+                        resultSet.getString("formaPagamento"),
+                        resultSet.getTimestamp("dataVenda"),
+                        resultSet.getDouble("comissaoVenda"),
+                        resultSet.getString("nomeVendedor"),
+                        resultSet.getString("nomeCliente")
+                );
+
+                vendas.add(venda);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return vendas;
+    }
 }

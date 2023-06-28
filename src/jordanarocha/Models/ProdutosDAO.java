@@ -170,4 +170,30 @@ public class ProdutosDAO {
         }
     }
 
+    //Método que retorna os ultimos 10 produtos
+    public ObservableList<Produto> getProdutos10() {
+        ObservableList<Produto> produtos = FXCollections.observableArrayList();
+        String sql = "SELECT idProduto, nomeProduto, valorProduto, acessorioProduto, ligaProduto, pedraProduto, tamanhoProduto, fotoProduto FROM produto WHERE statusProduto = 1 ORDER BY idProduto DESC LIMIT 10";
+
+        try (Connection connection = getConnection(); Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                int id = rs.getInt("idProduto");
+                String nome = rs.getString("nomeProduto");
+                Double valor = rs.getDouble("valorProduto");
+                String acessorio = rs.getString("acessorioProduto");
+                String liga = rs.getString("ligaProduto");
+                String pedra = rs.getString("pedraProduto");
+                String tamanho = rs.getString("tamanhoProduto");
+                byte[] foto = rs.getBytes("fotoProduto");
+
+                produtos.add(new Produto(id, nome, valor, acessorio, liga, pedra, tamanho, foto));
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return produtos;
+    }
 }

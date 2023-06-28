@@ -1387,7 +1387,7 @@ public class PrincipalController implements Initializable {
 
         // -------------------------------- Populando Clientes
         //Observable List que recebe o getProdutos, ou seja, recebe todos os produtos do DB
-        ObservableList<Produto> produtos = produtosDAO.getProdutos();
+        ObservableList<Produto> produtos = produtosDAO.getProdutos10();
 
         recenteIdProduto.setCellValueFactory(new PropertyValueFactory<>("idProduto"));
         recenteNomeProduto.setCellValueFactory(new PropertyValueFactory<>("nomeProduto"));
@@ -1404,7 +1404,7 @@ public class PrincipalController implements Initializable {
 
         // -------------------------------- Populando Clientes
         //Observable List que recebe o getClientes, ou seja recebe todos os clientes do DB
-        ObservableList<Cliente> clientes = joalheriaDao.getClientes();
+        ObservableList<Cliente> clientes = joalheriaDao.getClientes10();
 
         recenteIdCliente.setCellValueFactory(new PropertyValueFactory<>("id"));
         recenteNomeCliente.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -1418,7 +1418,7 @@ public class PrincipalController implements Initializable {
 
         // -------------------------------- Populando Vendas
         //Observable List que recebe o getVendas, ou seja, recebe todos as Vendas do BD
-        ObservableList<Venda> vendas = vendasDAO.getVendas();
+        ObservableList<Venda> vendas = vendasDAO.getVendas10();
 
         recenteIdVenda.setCellValueFactory(new PropertyValueFactory<>("idVendas"));
         recenteCompradorVenda.setCellValueFactory(new PropertyValueFactory<>("nomeCliente"));

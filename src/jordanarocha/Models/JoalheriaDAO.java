@@ -298,4 +298,29 @@ public class JoalheriaDAO {
         }
     }
 
+    //Método que retorna os ultimos 10 clientes
+    public ObservableList<Cliente> getClientes10() {
+        ObservableList<Cliente> clientes = FXCollections.observableArrayList();
+        String sql = "SELECT id_cliente, nome_cliente, cpf_cliente, email_cliente, telefone_cliente, endereco_cliente, observacao_cliente FROM clientes ORDER BY id_cliente DESC LIMIT 10";
+
+        try (Connection connection = getConnection(); Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                int id = rs.getInt("id_cliente");
+                String nome = rs.getString("nome_cliente");
+                String cpf = rs.getString("cpf_cliente");
+                String email = rs.getString("email_cliente");
+                String celular = rs.getString("telefone_cliente");
+                String endereco = rs.getString("endereco_cliente");
+                String observacao = rs.getString("observacao_cliente");
+                clientes.add(new Cliente(id, nome, cpf, email, celular, endereco, observacao));
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return clientes;
+    }
+
 }
