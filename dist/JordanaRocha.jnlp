@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="JordanaRocha.jar" size="6778353" download="eager" />
+    <jar href="JordanaRocha.jar" size="6778434" download="eager" />
     <jar href="lib\commons-lang3-3.12.0.jar" size="587402" download="eager" />
     <jar href="lib\controlsfx-8.40.14.jar" size="1215643" download="eager" />
     <jar href="lib\jfoenix-8.0.10.jar" size="2710207" download="eager" />

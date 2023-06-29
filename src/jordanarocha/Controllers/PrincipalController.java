@@ -341,7 +341,7 @@ public class PrincipalController implements Initializable {
                 //Convertendo a imagem redimensionada para um array de bytes
                 ByteArrayOutputStream byteOutput = new ByteArrayOutputStream();
                 ImageIO.write(resizedImage, "png", byteOutput);
-                byte[] imagemBytes = byteOutput.toByteArray();
+                imagemBytes = byteOutput.toByteArray();
 
                 //Convertendo a imagem redimensionada para um objeto Image do JavaFX
                 ByteArrayInputStream byteInput = new ByteArrayInputStream(imagemBytes);
