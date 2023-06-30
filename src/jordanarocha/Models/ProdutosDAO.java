@@ -36,37 +36,41 @@ public class ProdutosDAO {
 
         try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setString(1, produto.getNomeProduto());
-            preparedStatement.setDouble(2, produto.getValorProduto());
-            preparedStatement.setString(3, produto.getAcessorioProduto());
-            preparedStatement.setString(4, produto.getLigaProduto());
-            preparedStatement.setString(5, produto.getPedraProduto());
-            preparedStatement.setString(6, produto.getTamanhoProduto());
+            //Dando get em cada atributo do produto
+            preparedStatement.setString(1, produto.getNomeProduto()); //Atribui Nome
+            preparedStatement.setDouble(2, produto.getValorProduto());//Atribui Valor
+            preparedStatement.setString(3, produto.getAcessorioProduto());//Atribui Acessorio
+            preparedStatement.setString(4, produto.getLigaProduto());//Atribui Produto
+            preparedStatement.setString(5, produto.getPedraProduto());//Atribui Pedra
+            preparedStatement.setString(6, produto.getTamanhoProduto());//Atribui Tamanho
 
-            if (produto.getFotoProduto() != null) {
-                preparedStatement.setBytes(7, produto.getFotoProduto());
+            if (produto.getFotoProduto() != null) { // Confere se a foto é nula
+                preparedStatement.setBytes(7, produto.getFotoProduto());//Retornando a Foto caso não seja nulo
             } else {
-                preparedStatement.setNull(7, java.sql.Types.BLOB);
+                preparedStatement.setNull(7, java.sql.Types.BLOB);// Deixando sem foto caso seja nulo
             }
 
-            preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate(); //Executa a string sql
 
             System.out.println("O produto " + produto.getNomeProduto() + " foi cadastrado com sucesso!");
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    //Lendo os Produtos do Banco de Dados (READ)
+    //Lendo os Produtos Disponíveis do Banco de Dados (READ)
     public ObservableList<Produto> getProdutos() {
+
         ObservableList<Produto> produtos = FXCollections.observableArrayList();
 
         try (Connection connection = getConnection(); Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery("SELECT idProduto, nomeProduto, valorProduto, acessorioProduto, ligaProduto, pedraProduto, tamanhoProduto, fotoProduto FROM produto WHERE statusProduto = 1")) {
 
+            //Enquanto tiver uma próxima linha ele continuará o While
             while (rs.next()) {
-                int id = rs.getInt("idProduto");
+                int id = rs.getInt("idProduto"); //Atribuindo a id o valor na coluna idProduto
                 String nome = rs.getString("nomeProduto");
                 Double valor = rs.getDouble("valorProduto");
                 String acessorio = rs.getString("acessorioProduto");
@@ -90,9 +94,13 @@ public class ProdutosDAO {
     public void excluirProduto(int id) {
         String sql = "DELETE FROM produto WHERE idProduto = ?";
         try {
+
             PreparedStatement stmt = getConnection().prepareCall(sql);
+
             stmt.setInt(1, id);
+
             stmt.executeUpdate();
+
         } catch (Exception e) {
             System.out.println("Erro ao excluir produto: " + e.getMessage());
         }
@@ -136,7 +144,7 @@ public class ProdutosDAO {
 
         try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setString(1, produto.getNomeProduto());
+            preparedStatement.setString(1, produto.getNomeProduto());//Atribui o nome do produto
             preparedStatement.setDouble(2, produto.getValorProduto());
             preparedStatement.setString(3, produto.getAcessorioProduto());
             preparedStatement.setString(4, produto.getLigaProduto());

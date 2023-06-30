@@ -15,10 +15,10 @@ public class Produto {
     private byte[] fotoProduto;
     private int statusProduto;
 
-    public Produto(){
+    public Produto() {
         
     }
-    
+
     public Produto(int idProduto, String nomeProduto, double valorProduto, String acessorioProduto, String ligaProduto, String pedraProduto, String tamanhoProduto, byte[] fotoProduto, int statusProduto) {
         this.idProduto = idProduto;
         this.nomeProduto = nomeProduto;
@@ -31,7 +31,6 @@ public class Produto {
         this.statusProduto = statusProduto;
     }
 
-    
     public Produto(int idProduto, String nomeProduto, double valorProduto, String acessorioProduto, String ligaProduto, String pedraProduto, String tamanhoProduto, byte[] fotoProduto) {
         this.idProduto = idProduto;
         this.nomeProduto = nomeProduto;
